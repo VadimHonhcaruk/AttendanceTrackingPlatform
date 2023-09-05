@@ -1,7 +1,6 @@
 .about {
   width: 48vw;
   background-color: rgb(215, 244, 244);
-  height: 60vh;
   border: 2px solid rgb(175, 211, 243);
 }
 
@@ -48,5 +47,11 @@
 .savebutt {
   position: relative;
   left: 45%;
-  top: 20%;
+  top: 6%;
+}
+
+.deleteButt {
+  background-color: red;
+  position: relative;
+  right: 40%;
 }
