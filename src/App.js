@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Login } from "./components/Login/Login";
+import { Profile } from "./components/Profile/Profile";
+import vadim from './images/vadim.jpg';
 
 
 function App() {
@@ -10,7 +12,8 @@ function App() {
 
   return (
     <div className="App">
-      <Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} error={error} />
+      {/* <Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} error={error} /> */}
+      <Profile photo={vadim} name='Vadim Honcharuk' />
     </div>
   );
 }

@@ -1,0 +1,52 @@
+.about {
+  width: 48vw;
+  background-color: rgb(215, 244, 244);
+  height: 60vh;
+  border: 2px solid rgb(175, 211, 243);
+}
+
+.headerAbout {
+  width: 100%;
+  height: 10%;
+  background-color: rgb(175, 211, 243);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name {
+  font-weight: 900;
+  margin-left: 0.5rem;
+  font-size: 1.1rem;
+  filter: drop-shadow(2px 2px 0px rgb(158, 156, 156));
+}
+
+.flex {
+  display: flex;
+  margin-left: 3%;
+  align-items: center;
+}
+
+.marg {
+  margin-right: 3%;
+}
+
+.flexcent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 90%;
+  margin-top: 2%;
+}
+
+.noneactive {
+  opacity: 0.5;
+  cursor: unset;
+}
+
+.savebutt {
+  position: relative;
+  left: 45%;
+  top: 20%;
+}
