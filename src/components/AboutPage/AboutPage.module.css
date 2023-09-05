@@ -47,11 +47,12 @@
 .savebutt {
   position: relative;
   left: 45%;
-  top: 6%;
+  top: 9vh;
 }
 
 .deleteButt {
   background-color: red;
   position: relative;
   right: 40%;
+  top: 6.2vh;
 }

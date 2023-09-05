@@ -20,7 +20,7 @@ export const AboutPage = ({ setFirstName, setSecondName, setBirth, setPhone, set
                 <Info edit={edit} label='Phone' onch={setPhone} info={phone || 'There is no phone'} />
                 <Info edit={edit} label='Email' onch={setEmailState} info={email || 'There is no email'} />
                 <Info edit={edit} label='Card' onch={setCard} info={card || 'There is no card'} />
-                <Info edit={edit} label='Status' info={status} />
+                <Info edit={edit} label='Status' info={status} onch={setActive} />
                 <Button onclick={edit ? () => setEdit(prev => !prev) : null} tag='Save' classN={!edit ? c.noneactive + ' ' + c.savebutt : c.savebutt} />
                 <Button onclick={() => setEdit()} tag='Delete account' classN={c.deleteButt} />
             </div>
