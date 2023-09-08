@@ -1,0 +1,21 @@
+.mainContent {
+  opacity: 1;
+  margin: auto;
+  width: 80%;
+  animation: mainContentShow 3s;
+}
+
+@keyframes mainContentShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .mainContent {
+    width: 90%;
+  }
+}

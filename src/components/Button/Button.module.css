@@ -3,4 +3,5 @@
   color: white;
   padding: 0.25rem 1rem;
   cursor: pointer;
+  transition: all ease 0.5s;
 }

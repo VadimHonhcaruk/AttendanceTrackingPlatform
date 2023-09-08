@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Login } from "./components/Login/Login";
 import { Profile } from "./components/Profile/Profile";
+import { MainContent } from "./components/Calendar/MainContent";
 import vadim from './images/vadim.jpg';
+import { MainHeader } from "./components/MainHeader/MainHeader";
 
 
 function App() {
@@ -17,12 +19,16 @@ function App() {
   const [phoneState, setPhone] = useState('+380983169348');
   const [emailState, setEmailState] = useState('vadimhonc@gmail.com');
   const [cardState, setCard] = useState('5656 7156 3895 8035');
-  const [active, setActive] = useState('Active')
+  const [active, setActive] = useState('Active');
+
+  const [page, setPage] = useState(2);
 
   return (
     <div className="App">
-      {/* <Login email={email} password={password} setEmail={setEmail} setPassword={setPassword} error={error} /> */}
-      <Profile setFirstName={setFirstName} setSecondName={setSecondName} setBirth={setBirth} setPhone={setPhone} setEmailState={setEmailState} setCard={setCard} setActive={setActive} photo={vadim} firstName={firstNameState} secondName={secondNameState} status={active} birth={birthday} email={emailState} phone={phoneState} card={cardState} />
+      {page !== 1 && <MainHeader setPage={setPage} />}
+      {page === 1 && <Login setPage={setPage} email={email} password={password} setEmail={setEmail} setPassword={setPassword} error={error} />}
+      {page === 2 && <Profile setFirstName={setFirstName} setSecondName={setSecondName} setBirth={setBirth} setPhone={setPhone} setEmailState={setEmailState} setCard={setCard} setActive={setActive} photo={vadim} firstName={firstNameState} secondName={secondNameState} status={active} birth={birthday} email={emailState} phone={phoneState} card={cardState} />}
+      {page === 3 && <MainContent />}
     </div>
   );
 }

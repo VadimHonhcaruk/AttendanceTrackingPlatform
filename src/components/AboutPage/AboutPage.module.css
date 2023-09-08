@@ -2,6 +2,8 @@
   width: 48vw;
   background-color: rgb(215, 244, 244);
   border: 2px solid rgb(175, 211, 243);
+  height: fit-content;
+  padding-bottom: 2%;
 }
 
 .headerAbout {
@@ -45,14 +47,16 @@
 }
 
 .savebutt {
-  position: relative;
-  left: 45%;
-  top: 9vh;
 }
 
 .deleteButt {
   background-color: red;
-  position: relative;
-  right: 40%;
-  top: 6.2vh;
+}
+
+.buttons {
+  display: flex;
+  margin: auto;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 5%;
 }

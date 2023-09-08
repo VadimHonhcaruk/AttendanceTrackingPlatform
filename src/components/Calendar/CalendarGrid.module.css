@@ -1,0 +1,72 @@
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  grid-gap: 1px;
+  background-color: rgb(215, 244, 244);
+}
+
+.cell {
+  background-color: aliceblue;
+  padding: 10%;
+  font-size: 80%;
+  overflow: hidden;
+  height: 15vh;
+}
+
+.cellCurrentDay {
+  background-color: rgb(15, 248, 194);
+}
+
+.cellNotCurrentMonth {
+  background-color: rgb(255, 255, 255);
+  color: #77737388;
+}
+
+.cellHeader {
+  height: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eventsList {
+  margin-top: 5%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+.event {
+  margin-bottom: 10px;
+  background-color: #af7eeb13;
+  width: 100%;
+  cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+  .cell {
+    font-size: 70%;
+    height: 13vh;
+  }
+}
+
+@media (max-width: 810px) {
+  .cell {
+    font-size: 60%;
+    height: 11vh;
+  }
+}
+
+@media (max-width: 600px) {
+  .cell {
+    font-size: 50%;
+    height: 8vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .cell {
+    height: 6vh;
+  }
+}
