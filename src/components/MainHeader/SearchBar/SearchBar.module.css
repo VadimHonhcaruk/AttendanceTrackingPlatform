@@ -1,0 +1,28 @@
+.input:active,
+.input:hover,
+.input:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+.input {
+  border: none;
+  background-color: var(--main-background-color);
+  color: var(--text-color);
+  width: 14rem;
+  letter-spacing: 0.05rem;
+}
+
+.search {
+  background-color: var(--main-background-color);
+  padding: 0.35rem 0.6rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  width: 1rem;
+  cursor: pointer;
+}

@@ -1,0 +1,24 @@
+.navOption {
+  height: 3rem;
+  padding-left: 1.25rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.navOption:hover {
+  background-color: #161d27;
+}
+
+.optionImage {
+  width: 1rem;
+  margin-right: 1rem;
+}
+
+.navOption,
+.navOption:active,
+.navOption:hover {
+  text-decoration: none;
+  color: #9faec1;
+}

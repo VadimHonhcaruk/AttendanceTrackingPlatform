@@ -1,0 +1,83 @@
+.photo {
+  width: 1.2rem;
+  margin-right: 0.3rem;
+  border-radius: 100%;
+}
+
+.arrow {
+  padding-top: 0.1rem;
+  margin-left: 0.3rem;
+  width: 0.6rem;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  background-color: var(--add-main-color);
+  padding: 0.35rem 0.6rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  width: 5rem;
+}
+
+.name {
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+.drop {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--dropdown-color);
+  border-radius: 0.25rem;
+  margin-top: 0.25rem;
+  display: unset;
+  cursor: auto;
+}
+
+.photoName {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 2rem 2rem;
+}
+
+.photoProf {
+  width: 3.4rem;
+  border-radius: 100%;
+  margin: 0.6rem;
+}
+
+.fullName {
+  color: var(--add-text-color);
+  font-size: 1.1rem;
+}
+
+.button {
+  color: var(--add-text-color);
+  font-size: 1rem;
+  width: 90%;
+  margin: auto;
+  padding: 0.5rem 0.3rem;
+  font-weight: 700;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: var(--main-background-color);
+}
+
+.borderTop {
+  padding: 0.7rem;
+  border-top: 2px solid var(--border-color);
+}
+
+.profileNav {
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}

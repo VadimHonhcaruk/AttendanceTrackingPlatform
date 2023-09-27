@@ -1,15 +1,9 @@
 .mainHeader {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  width: 100vw;
-  height: 10vh;
-  background-color: rgb(41, 40, 40);
-  border-bottom: 1px solid rgb(111, 173, 226);
-}
-
-.title {
-  color: white;
-  filter: drop-shadow(2px 2px rgb(111, 173, 226));
-  font-size: 2rem;
+  justify-content: space-between;
+  padding: 0 10%;
+  height: 4rem;
+  background-color: var(--header-color);
+  filter: drop-shadow(1px 1px 1px var(--dropshadow-color));
 }

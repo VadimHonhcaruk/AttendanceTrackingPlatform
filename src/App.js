@@ -1,17 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Login } from "./components/Login/Login";
 import { Profile } from "./components/Profile/Profile";
 import { MainContent } from "./components/Calendar/MainContent";
-import vadim from './images/vadim.jpg';
 import { MainHeader } from "./components/MainHeader/MainHeader";
+import { useTheme } from "./hooks/useTheme";
+import { NavSideBar } from "./components/NavSideBar/NavSideBar";
+import { Route, Routes, Link, path } from 'react-router-dom'
+import { NotFound } from "./components/NotFound/NotFound";
+import c from './App.module.css';
 
 
 function App() {
 
+  const { theme, setTheme } = useTheme()
+
+  const handleLightThemeClick = () => {
+    theme === 'light' ? setTheme('dark') : setTheme('light');
+  }
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
-
 
   const [firstNameState, setFirstName] = useState('Vadim');
   const [secondNameState, setSecondName] = useState('Honcharuk');
@@ -20,15 +29,18 @@ function App() {
   const [emailState, setEmailState] = useState('vadimhonc@gmail.com');
   const [cardState, setCard] = useState('5656 7156 3895 8035');
   const [active, setActive] = useState('Active');
-
-  const [page, setPage] = useState(2);
+  const [hide, setHide] = useState(true);
 
   return (
-    <div className="App">
-      {page !== 1 && <MainHeader setPage={setPage} />}
-      {page === 1 && <Login setPage={setPage} email={email} password={password} setEmail={setEmail} setPassword={setPassword} error={error} />}
-      {page === 2 && <Profile setFirstName={setFirstName} setSecondName={setSecondName} setBirth={setBirth} setPhone={setPhone} setEmailState={setEmailState} setCard={setCard} setActive={setActive} photo={vadim} firstName={firstNameState} secondName={secondNameState} status={active} birth={birthday} email={emailState} phone={phoneState} card={cardState} />}
-      {page === 3 && <MainContent />}
+    <div>
+      <NavSideBar themeChange={handleLightThemeClick} />
+      <div className={c.main}>
+        <MainHeader theme={theme} setHide={setHide} hide={hide} />
+        <Routes>
+          <Route path="/attendance" element={<MainContent />} />
+          <Route path="/*" element={<NotFound />} />
+        </Routes>
+      </div>
     </div>
   );
 }
