@@ -1,7 +1,7 @@
 .attCont {
   margin-top: 7rem;
   min-height: 20rem;
-  min-width: 40rem;
+  min-width: 35vw;
   background-color: var(--cell-not-color);
   border: 1px solid var(--border-cell-color);
   color: var(--text-color);

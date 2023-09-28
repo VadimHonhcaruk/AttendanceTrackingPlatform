@@ -1,12 +1,13 @@
 .mainContent {
   opacity: 1;
   margin: 0 3%;
-  width: 700px;
+  width: 40vw;
   animation: mainContentShow 1s;
 }
 
 .flex {
   display: flex;
+  margin-bottom: 10%;
 }
 
 @keyframes mainContentShow {
