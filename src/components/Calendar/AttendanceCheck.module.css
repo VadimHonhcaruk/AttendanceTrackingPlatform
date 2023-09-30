@@ -23,3 +23,11 @@
   font-size: 1.3rem;
   letter-spacing: -0.1rem;
 }
+
+.select {
+  border-radius: 0;
+  border: 1px solid var(--border-cell-color);
+  color: var(--text-color);
+  background-color: var(--cell-not-color);
+  padding: 0.2rem 0.5rem;
+}

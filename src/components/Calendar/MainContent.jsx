@@ -61,7 +61,7 @@ export function MainContent() {
                     />
                     <CalendarGrid setTitle={setTitle} setDescription={setDescription} setDate={setDate} setTime={setTime} startDay={startDay} today={today} eventsList={eventsList} setCurrentEvent={setCurrentEvent} setModalVisible={setModalVisible} setEditing={setEditing} />
                 </div>
-                <AttendanceCheck />
+                <AttendanceCheck email='vadimhonc@gmail.com' />
                 {/* <Modal
                     setModalVisible={setModalVisible}
                     title={title}
