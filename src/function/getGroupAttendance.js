@@ -1,5 +1,5 @@
-export const getGroupAttendance = async (group, choosenDay, PATH, TOKEN, AUTH) => {
-    return await fetch((`${PATH}/group-attendances?endDate=${choosenDay}&groupId=${group}&startDate=${choosenDay}`), {
+export const getGroupAttendance = async (group, startDay, PATH, TOKEN, AUTH, endDay = startDay) => {
+    return await fetch((`${PATH}/group-attendances?endDate=${endDay}&groupId=${group}&startDate=${startDay}`), {
         method: 'GET',
         headers: {
             'accept': 'application/json',

@@ -5,10 +5,12 @@ import classes from './MainContent.module.css';
 import moment from 'moment/moment';
 import { HeaderAdd } from '../Header/HeaderAdd';
 import { AttendanceCheck } from './AttendanceCheck';
+import { getGroupAttendance } from '../../function/getGroupAttendance';
 
 export function MainContent() {
 
     const [choosenDay, setChoosenDay] = useState((moment()).format('YYYY-MM-DD'));
+    const [groupId, setGroupId] = useState(1);
 
     moment.updateLocale('en', { week: { dow: 1 } });
     const [today, setToday] = useState(() => {
@@ -21,15 +23,32 @@ export function MainContent() {
         return todaymoment;
     });
 
-    const [eventsList, setEventsList] = useState(localStorage.getItem('eventsList') ? JSON.parse(localStorage.getItem('eventsList')) : []);
+    const [attendance, setAttendance] = useState([
+        {
+            "attendanceDate": "2023-10-01",
+            "attendances": {
+                "additionalProp1": "present",
+                "additionalProp2": "present",
+                "additionalProp3": "present"
+            }
+        },
+        {
+            "attendanceDate": "2023-10-05",
+            "attendances": {
+                "additionalProp1": "present",
+                "additionalProp2": "present",
+                "additionalProp3": "present"
+            }
+        }
+    ]);
+
+    const TOKEN = process.env.REACT_APP_TOKEN;
+    const AUTH = process.env.REACT_APP_AUTH;
+    const PATH = process.env.REACT_APP_API_PATH;
 
     useEffect(() => {
         localStorage.setItem('today', JSON.stringify(today));
     }, [today]);
-
-    useEffect(() => {
-        localStorage.setItem('eventsList', JSON.stringify(eventsList));
-    }, [eventsList]);
 
     const startDay = today.clone().startOf('month').startOf('week');
 
@@ -37,15 +56,33 @@ export function MainContent() {
         setToday(prev => prev.clone().subtract(1, 'month'));
     }
 
+    // async function fetchDataAttendance() {
+    //     const response = await getGroupAttendance(groupId, today.clone().startOf('month').format('YYYY-MM-DD'), PATH, TOKEN, AUTH, today.clone().endOf('month').format('YYYY-MM-DD'));
+    //     const data = await response.json();
+    //     setAttendance(data.studentsAttendances);
+    //     setAttendance(absentAndPresent());
+    // }
+
+    const absentAndPresent = () => {
+        const copy = attendance.map((x) => {
+            let present = 0, absent = 0;
+            for (const key in x.attendances) {
+                x.attendances[key] === 'present' ? ++present : ++absent;
+            }
+            return { attendanceDate: x.attendanceDate, present: present, absent: absent, }
+        });
+        return copy;
+    }
+
+    useEffect(() => {
+        // fetchDataAttendance();
+        setAttendance(absentAndPresent());
+    }, [today, PATH, TOKEN, AUTH, groupId])
+
+
     const next = () => {
         setToday(prev => prev.clone().add(1, 'month'));
     }
-
-    const [currentEvent, setCurrentEvent] = useState({});
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
-    const [time, setTime] = useState("");
 
     return (
         <>
@@ -58,9 +95,9 @@ export function MainContent() {
                         today={today}
                         setToday={setToday}
                     />
-                    <CalendarGrid choosenDay={choosenDay} setChoosenDay={setChoosenDay} setTitle={setTitle} setDescription={setDescription} setDate={setDate} setTime={setTime} startDay={startDay} today={today} eventsList={eventsList} setCurrentEvent={setCurrentEvent} />
+                    <CalendarGrid choosenDay={choosenDay} setChoosenDay={setChoosenDay} startDay={startDay} today={today} attendanceList={attendance} />
                 </div>
-                <AttendanceCheck choosenDay={choosenDay} email='vadimhonc@gmail.com' />
+                <AttendanceCheck setGroupId={setGroupId} groupId={groupId} choosenDay={choosenDay} email='vadimhonc@gmail.com' />
                 {/* <Modal
                     setModalVisible={setModalVisible}
                     title={title}

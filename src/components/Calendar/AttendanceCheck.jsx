@@ -5,11 +5,10 @@ import { useState } from 'react';
 import { getGroupAttendance } from '../../function/getGroupAttendance';
 import { Student } from './Student';
 
-export const AttendanceCheck = ({ choosenDay, email }) => {
+export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email }) => {
 
     const [groups, setGroups] = useState([{ groupId: 1, groupTitle: 'TR-02' }, { groupId: 2, groupTitle: 'TR-01' }, { groupId: 3, groupTitle: 'TR-06' }]);
     const [group, setGroup] = useState('Please choose');
-    const [groupId, setGroupId] = useState(1);
     const [attendance, setAttendance] = useState({
         student1: 'present',
         student2: 'absent',
