@@ -1,5 +1,5 @@
-export const getGroup = async (email, PATH, TOKEN, AUTH) => {
-    const response = await fetch((`${PATH}/teacher-groups?userEmail=${encodeURIComponent(email)}`), {
+export const getGroup = (email, PATH, TOKEN, AUTH) => {
+    return fetch((`${PATH}/teacher-groups?userEmail=${encodeURIComponent(email)}`), {
         method: 'GET',
         headers: {
             'accept': 'application/json',
@@ -8,7 +8,4 @@ export const getGroup = async (email, PATH, TOKEN, AUTH) => {
         },
         mode: 'cors'
     })
-
-    const data = await response.json();
-    return data;
 }

@@ -15,10 +15,11 @@
   height: 4rem;
   width: auto;
   color: var(--text-color);
+  cursor: pointer;
 }
 
-.cellCurrentDay {
-  background-color: rgb(15, 248, 194);
+.cellChoosenDay {
+  background-color: var(--cell-choosenDay-color);
 }
 
 .cellNotCurrentMonth {
@@ -45,6 +46,10 @@
   background-color: #af7eeb13;
   width: 100%;
   cursor: pointer;
+}
+
+.cell:hover {
+  background-color: var(--cell-hover-color);
 }
 
 @media (max-width: 1100px) {

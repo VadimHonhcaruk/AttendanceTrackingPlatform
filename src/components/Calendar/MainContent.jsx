@@ -8,8 +8,7 @@ import { AttendanceCheck } from './AttendanceCheck';
 
 export function MainContent() {
 
-    const [modalVisible, setModalVisible] = useState(false);
-    const [editing, setEditing] = useState(false);
+    const [choosenDay, setChoosenDay] = useState((moment()).format('YYYY-MM-DD'));
 
     moment.updateLocale('en', { week: { dow: 1 } });
     const [today, setToday] = useState(() => {
@@ -59,9 +58,9 @@ export function MainContent() {
                         today={today}
                         setToday={setToday}
                     />
-                    <CalendarGrid setTitle={setTitle} setDescription={setDescription} setDate={setDate} setTime={setTime} startDay={startDay} today={today} eventsList={eventsList} setCurrentEvent={setCurrentEvent} setModalVisible={setModalVisible} setEditing={setEditing} />
+                    <CalendarGrid choosenDay={choosenDay} setChoosenDay={setChoosenDay} setTitle={setTitle} setDescription={setDescription} setDate={setDate} setTime={setTime} startDay={startDay} today={today} eventsList={eventsList} setCurrentEvent={setCurrentEvent} />
                 </div>
-                <AttendanceCheck email='vadimhonc@gmail.com' />
+                <AttendanceCheck choosenDay={choosenDay} email='vadimhonc@gmail.com' />
                 {/* <Modal
                     setModalVisible={setModalVisible}
                     title={title}

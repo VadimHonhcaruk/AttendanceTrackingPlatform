@@ -41,6 +41,8 @@ code {
   --border-cell-color: #434349;
   --cell-not-color: #253041;
   --cell-color: #1f2937;
+  --cell-choosenDay-color: #526888;
+  --cell-hover-color: #364458;
 }
 
 [data-theme="light"] {
@@ -59,4 +61,6 @@ code {
   --border-cell-color: #dddddd;
   --cell-not-color: #f6f7f9;
   --cell-color: #ebedf0;
+  --cell-choosenDay-color: #d2def0;
+  --cell-hover-color: #c7cdd6;
 }
