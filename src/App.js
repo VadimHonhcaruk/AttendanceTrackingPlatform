@@ -8,6 +8,7 @@ import { NavSideBar } from "./components/NavSideBar/NavSideBar";
 import { Route, Routes, Link, path } from 'react-router-dom'
 import { NotFound } from "./components/NotFound/NotFound";
 import c from './App.module.css';
+import Modal from "./components/Calendar/Modal";
 
 
 function App() {
@@ -30,14 +31,17 @@ function App() {
   const [cardState, setCard] = useState('5656 7156 3895 8035');
   const [active, setActive] = useState('Active');
   const [hide, setHide] = useState(true);
+  const [modalVision, setModalVision] = useState(true);
+  const [note, setNote] = useState('');
 
   return (
     <div>
+      {modalVision && <Modal setModalVision={setModalVision} setNote={setNote} note={note} />}
       <NavSideBar themeChange={handleLightThemeClick} />
       <div className={c.main}>
         <MainHeader theme={theme} setHide={setHide} hide={hide} />
         <Routes>
-          <Route path="/attendance" element={<MainContent />} />
+          <Route path="/attendance" element={<MainContent setModalVision={setModalVision} />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

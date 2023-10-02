@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { getGroupAttendance } from '../../function/getGroupAttendance';
 import { Student } from './Student';
 
-export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email }) => {
+export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setModalVision }) => {
 
     const [groups, setGroups] = useState([{ groupId: 1, groupTitle: 'TR-02' }, { groupId: 2, groupTitle: 'TR-01' }, { groupId: 3, groupTitle: 'TR-06' }]);
     const [group, setGroup] = useState('Please choose');
@@ -13,6 +13,15 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email }) => {
         student1: 'present',
         student2: 'absent',
         student3: 'present',
+        student4: 'present',
+        student5: 'absent',
+        student6: 'present',
+        student7: 'present',
+        student8: 'absent',
+        student9: 'present',
+        student11: 'present',
+        student22: 'absent',
+        student: 'present',
     });
 
     const TOKEN = process.env.REACT_APP_TOKEN;
@@ -74,6 +83,7 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email }) => {
                         }))}
                     </select>
                 </div>
+                <div className={c.select} onClick={() => setModalVision(true)}> Note </div>
                 <select className={c.select}>
                     <option>Mark All</option>
                     <option onClick={() => handleAttendanceChangeAll('present')}>Present</option>

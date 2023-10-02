@@ -7,7 +7,7 @@ import { HeaderAdd } from '../Header/HeaderAdd';
 import { AttendanceCheck } from './AttendanceCheck';
 import { getGroupAttendance } from '../../function/getGroupAttendance';
 
-export function MainContent() {
+export function MainContent({ setModalVision }) {
 
     const [choosenDay, setChoosenDay] = useState((moment()).format('YYYY-MM-DD'));
     const [groupId, setGroupId] = useState(1);
@@ -97,24 +97,7 @@ export function MainContent() {
                     />
                     <CalendarGrid choosenDay={choosenDay} setChoosenDay={setChoosenDay} startDay={startDay} today={today} attendanceList={attendance} />
                 </div>
-                <AttendanceCheck setGroupId={setGroupId} groupId={groupId} choosenDay={choosenDay} email='vadimhonc@gmail.com' />
-                {/* <Modal
-                    setModalVisible={setModalVisible}
-                    title={title}
-                    setTitle={setTitle}
-                    description={description}
-                    setDescription={setDescription}
-                    date={date}
-                    setDate={setDate}
-                    time={time}
-                    setTime={setTime}
-                    eventList={eventsList}
-                    setEventList={setEventsList}
-                    currentEvent={currentEvent}
-                    setCurrentEvent={setCurrentEvent}
-                    setEditing={setEditing}
-                    editing={editing}
-                /> */}
+                <AttendanceCheck setModalVision={setModalVision} setGroupId={setGroupId} groupId={groupId} choosenDay={choosenDay} email='vadimhonc@gmail.com' />
             </div>
         </>
     )

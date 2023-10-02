@@ -1,6 +1,7 @@
 .attCont {
   margin-top: 7rem;
-  min-height: 20rem;
+  height: 25rem;
+  overflow: scroll;
   min-width: 35vw;
   background-color: var(--cell-not-color);
   border: 1px solid var(--border-cell-color);
@@ -31,6 +32,7 @@
   color: var(--text-color);
   background-color: var(--cell-not-color);
   padding: 0.2rem 0.5rem;
+  cursor: pointer;
 }
 
 .flex {
