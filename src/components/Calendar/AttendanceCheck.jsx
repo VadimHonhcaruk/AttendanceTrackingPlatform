@@ -7,66 +7,52 @@ import { Student } from './Student';
 
 export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setModalVision }) => {
 
-    const [groups, setGroups] = useState([{ groupId: 1, groupTitle: 'TR-02' }, { groupId: 2, groupTitle: 'TR-01' }, { groupId: 3, groupTitle: 'TR-06' }]);
+    const [groups, setGroups] = useState([]);
     const [group, setGroup] = useState('Please choose');
-    const [attendance, setAttendance] = useState({
-        student1: 'present',
-        student2: 'absent',
-        student3: 'present',
-        student4: 'present',
-        student5: 'absent',
-        student6: 'present',
-        student7: 'present',
-        student8: 'absent',
-        student9: 'present',
-        student11: 'present',
-        student22: 'absent',
-        student: 'present',
-    });
+    const [attendance, setAttendance] = useState([]);
 
     const TOKEN = process.env.REACT_APP_TOKEN;
     const AUTH = process.env.REACT_APP_AUTH;
     const PATH = process.env.REACT_APP_API_PATH;
 
-    const handleAttendanceChange = (studentName, value) => {
-        setAttendance({
-            ...attendance,
-            [studentName]: value,
-        })
+    const handleAttendanceChange = (studentId, value) => {
+        setAttendance((prevStudents) =>
+            prevStudents.map((student) =>
+                student.studentId === studentId
+                    ? { ...student, attendanceStatus: value }
+                    : student
+            )
+        );
     };
 
     const handleAttendanceChangeAll = (value) => {
-        const att = { ...attendance };
-        for (var key in att) {
-            if (att.hasOwnProperty(key)) {
-                att[key] = value;
-            }
-        }
-        setAttendance(att);
+        setAttendance(attendance.map(item => { return ({ ...item, 'attendanceStatus': value, }) }));
     };
 
-    // useEffect(() => {
-    //     fetchDataAttendance();
-    // }, [group])
+    useEffect(() => {
+        if (groupId) {
+            fetchDataAttendance();
+        }
+    }, [groupId, choosenDay])
 
 
-    // async function fetchDataAttendance() {
-    //     const response = await getGroupAttendance(groupId, choosenDay, PATH, TOKEN, AUTH);
-    //     const data = await response.json();
-    //     setAttendance(data.studentsAttendances[0].attendances);
-    //     console.log(data);
-    // }
+    async function fetchDataAttendance() {
+        const response = await getGroupAttendance(groupId, choosenDay, PATH, TOKEN, AUTH);
+        const data = await response.json();
+        if (data?.studentsAttendances[0]?.studentsStatuses) {
+            setAttendance(data.studentsAttendances[0].studentsStatuses);
+        }
+    }
 
-    // async function fetchData() {
-    //     const response = await getGroup(email, PATH, TOKEN, AUTH);
-    //     const data = await response.json();
-    //     setGroup(data);
-    //     console.log(data);
-    // }
+    async function fetchData() {
+        const response = await getGroup(email, PATH, TOKEN, AUTH);
+        const data = await response.json();
+        setGroups(data);
+    }
 
-    // useEffect(() => {
-    //     fetchData();
-    // }, [])
+    useEffect(() => {
+        fetchData();
+    }, [])
 
 
     return (
@@ -90,11 +76,12 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setMod
                     <option onClick={() => handleAttendanceChangeAll('absent')}>Absent</option>
                 </select>
             </div>
-            <div>
-                {Object.entries(attendance).map(([studentName, state], index) => (
-                    <Student key={index} handleAttendanceChange={handleAttendanceChange} studentName={studentName} state={state} />
+            <div className={c.students}>
+                {attendance.map(item => (
+                    <Student handleAttendanceChange={handleAttendanceChange} studentId={item.studentId} studentName={item.studentName} state={item.attendanceStatus} />
                 ))}
             </div>
+            <div className={c.saveCont}><div className={c.save}>Save</div></div>
         </div>
     )
 }

@@ -31,7 +31,7 @@ function App() {
   const [cardState, setCard] = useState('5656 7156 3895 8035');
   const [active, setActive] = useState('Active');
   const [hide, setHide] = useState(true);
-  const [modalVision, setModalVision] = useState(true);
+  const [modalVision, setModalVision] = useState(false);
   const [note, setNote] = useState('');
 
   return (

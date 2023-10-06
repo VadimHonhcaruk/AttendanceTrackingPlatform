@@ -1,1 +1,2 @@
 SELECT * FROM USERS;
+SELECT * FROM teachers;

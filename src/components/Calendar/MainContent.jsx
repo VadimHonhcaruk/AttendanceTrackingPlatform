@@ -10,7 +10,7 @@ import { getGroupAttendance } from '../../function/getGroupAttendance';
 export function MainContent({ setModalVision }) {
 
     const [choosenDay, setChoosenDay] = useState((moment()).format('YYYY-MM-DD'));
-    const [groupId, setGroupId] = useState(1);
+    const [groupId, setGroupId] = useState(false);
 
     moment.updateLocale('en', { week: { dow: 1 } });
     const [today, setToday] = useState(() => {
@@ -23,24 +23,8 @@ export function MainContent({ setModalVision }) {
         return todaymoment;
     });
 
-    const [attendance, setAttendance] = useState([
-        {
-            "attendanceDate": "2023-10-01",
-            "attendances": {
-                "additionalProp1": "present",
-                "additionalProp2": "present",
-                "additionalProp3": "present"
-            }
-        },
-        {
-            "attendanceDate": "2023-10-05",
-            "attendances": {
-                "additionalProp1": "present",
-                "additionalProp2": "present",
-                "additionalProp3": "present"
-            }
-        }
-    ]);
+    const [attendance, setAttendance] = useState([]);
+    const [resultArray, setResultArray] = useState([]);
 
     const TOKEN = process.env.REACT_APP_TOKEN;
     const AUTH = process.env.REACT_APP_AUTH;
@@ -56,27 +40,55 @@ export function MainContent({ setModalVision }) {
         setToday(prev => prev.clone().subtract(1, 'month'));
     }
 
-    // async function fetchDataAttendance() {
-    //     const response = await getGroupAttendance(groupId, today.clone().startOf('month').format('YYYY-MM-DD'), PATH, TOKEN, AUTH, today.clone().endOf('month').format('YYYY-MM-DD'));
-    //     const data = await response.json();
-    //     setAttendance(data.studentsAttendances);
-    //     setAttendance(absentAndPresent());
-    // }
+    async function fetchDataAttendance() {
+        if (groupId) {
+            const response = await getGroupAttendance(groupId, today.clone().startOf('month').format('YYYY-MM-DD'), PATH, TOKEN, AUTH, today.clone().endOf('month').format('YYYY-MM-DD'));
+            const data = await response.json();
+            await setAttendance(data.studentsAttendances);
+            await processInputArray();
+        }
+    }
 
     const absentAndPresent = () => {
-        const copy = attendance.map((x) => {
-            let present = 0, absent = 0;
-            for (const key in x.attendances) {
-                x.attendances[key] === 'present' ? ++present : ++absent;
+        const copy = [...attendance];
+        const copycopy = copy.map((x) => {
+            let present = 0, absent = 0, undef = 0;
+            for (const key in x.studentsStatuses) {
+                x.studentsStatuses[key].attendanceStatus === 'present' ? present++ : x.studentsStatuses[key].attendanceStatus === 'absent' ? absent++ : undef++;
             }
             return { attendanceDate: x.attendanceDate, present: present, absent: absent, }
         });
-        return copy;
+        // console.log(copycopy);
+        // setAttendance(copycopy);
+    }
+
+    const processInputArray = () => {
+        const processedArray = attendance.map((item) => {
+            const attendanceDate = item.attendanceDate;
+            const studentsStatuses = item.studentsStatuses;
+
+            let presentCount = 0;
+            let absentCount = 0;
+
+            studentsStatuses.forEach((student) => {
+                if (student.attendanceStatus === "present") {
+                    presentCount++;
+                } else if (student.attendanceStatus === "absent") {
+                    absentCount++;
+                }
+            });
+
+            return {
+                attendanceDate: attendanceDate,
+                present: presentCount,
+                absent: absentCount,
+            };
+        });
+        setResultArray(processedArray);
     }
 
     useEffect(() => {
-        // fetchDataAttendance();
-        setAttendance(absentAndPresent());
+        fetchDataAttendance();
     }, [today, PATH, TOKEN, AUTH, groupId])
 
 
@@ -95,9 +107,9 @@ export function MainContent({ setModalVision }) {
                         today={today}
                         setToday={setToday}
                     />
-                    <CalendarGrid choosenDay={choosenDay} setChoosenDay={setChoosenDay} startDay={startDay} today={today} attendanceList={attendance} />
+                    <CalendarGrid choosenDay={choosenDay} setChoosenDay={setChoosenDay} startDay={startDay} today={today} attendanceList={resultArray} />
                 </div>
-                <AttendanceCheck setModalVision={setModalVision} setGroupId={setGroupId} groupId={groupId} choosenDay={choosenDay} email='vadimhonc@gmail.com' />
+                <AttendanceCheck setModalVision={setModalVision} setGroupId={setGroupId} groupId={groupId} choosenDay={choosenDay} email='user1@example.com' />
             </div>
         </>
     )
