@@ -9,6 +9,7 @@ import { Route, Routes, Link, path } from 'react-router-dom'
 import { NotFound } from "./components/NotFound/NotFound";
 import c from './App.module.css';
 import Modal from "./components/Calendar/Modal";
+import moment from "moment/moment";
 
 
 function App() {
@@ -32,16 +33,17 @@ function App() {
   const [active, setActive] = useState('Active');
   const [hide, setHide] = useState(true);
   const [modalVision, setModalVision] = useState(false);
-  const [note, setNote] = useState('');
+  const [choosenDay, setChoosenDay] = useState((moment()).format('YYYY-MM-DD'));
+  const [groupId, setGroupId] = useState(false);
 
   return (
     <div>
-      {modalVision && <Modal setModalVision={setModalVision} setNote={setNote} note={note} />}
+      {modalVision && <Modal choosenDay={choosenDay} setModalVision={setModalVision} groupId={groupId} />}
       <NavSideBar themeChange={handleLightThemeClick} />
       <div className={c.main}>
         <MainHeader theme={theme} setHide={setHide} hide={hide} />
         <Routes>
-          <Route path="/attendance" element={<MainContent setModalVision={setModalVision} />} />
+          <Route path="/attendance" element={<MainContent groupId={groupId} setGroupId={setGroupId} choosenDay={choosenDay} setChoosenDay={setChoosenDay} setModalVision={setModalVision} />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

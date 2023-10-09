@@ -7,10 +7,7 @@ import { HeaderAdd } from '../Header/HeaderAdd';
 import { AttendanceCheck } from './AttendanceCheck';
 import { getGroupAttendance } from '../../function/getGroupAttendance';
 
-export function MainContent({ setModalVision }) {
-
-    const [choosenDay, setChoosenDay] = useState((moment()).format('YYYY-MM-DD'));
-    const [groupId, setGroupId] = useState(false);
+export function MainContent({ groupId, setGroupId, setModalVision, choosenDay, setChoosenDay }) {
 
     moment.updateLocale('en', { week: { dow: 1 } });
     const [today, setToday] = useState(() => {
@@ -40,57 +37,50 @@ export function MainContent({ setModalVision }) {
         setToday(prev => prev.clone().subtract(1, 'month'));
     }
 
-    async function fetchDataAttendance() {
-        if (groupId) {
-            const response = await getGroupAttendance(groupId, today.clone().startOf('month').format('YYYY-MM-DD'), PATH, TOKEN, AUTH, today.clone().endOf('month').format('YYYY-MM-DD'));
-            const data = await response.json();
-            await setAttendance(data.studentsAttendances);
-            await processInputArray();
-        }
-    }
-
-    const absentAndPresent = () => {
-        const copy = [...attendance];
-        const copycopy = copy.map((x) => {
-            let present = 0, absent = 0, undef = 0;
-            for (const key in x.studentsStatuses) {
-                x.studentsStatuses[key].attendanceStatus === 'present' ? present++ : x.studentsStatuses[key].attendanceStatus === 'absent' ? absent++ : undef++;
-            }
-            return { attendanceDate: x.attendanceDate, present: present, absent: absent, }
-        });
-        // console.log(copycopy);
-        // setAttendance(copycopy);
-    }
-
-    const processInputArray = () => {
-        const processedArray = attendance.map((item) => {
-            const attendanceDate = item.attendanceDate;
-            const studentsStatuses = item.studentsStatuses;
-
-            let presentCount = 0;
-            let absentCount = 0;
-
-            studentsStatuses.forEach((student) => {
-                if (student.attendanceStatus === "present") {
-                    presentCount++;
-                } else if (student.attendanceStatus === "absent") {
-                    absentCount++;
-                }
-            });
-
-            return {
-                attendanceDate: attendanceDate,
-                present: presentCount,
-                absent: absentCount,
-            };
-        });
-        setResultArray(processedArray);
-    }
-
     useEffect(() => {
+
+        async function fetchDataAttendance() {
+            if (groupId) {
+                const response = await getGroupAttendance(groupId, today.clone().startOf('month').startOf('week').format('YYYY-MM-DD'), PATH, TOKEN, AUTH, today.clone().endOf('month').endOf('week').format('YYYY-MM-DD'));
+                const data = await response.json();
+                setAttendance(data.studentsAttendances);
+            }
+        }
+
         fetchDataAttendance();
     }, [today, PATH, TOKEN, AUTH, groupId])
 
+    const processInputArray = async () => {
+        const processedArray = await attendance.map((item) => {
+            if (item.studentsStatuses) {
+                const attendanceDate = item.attendanceDate;
+                const studentsStatuses = item.studentsStatuses;
+
+                let presentCount = 0;
+                let absentCount = 0;
+
+                studentsStatuses.forEach((student) => {
+                    if (student.attendanceStatus === "present") {
+                        presentCount++;
+                    } else if (student.attendanceStatus === "absent") {
+                        absentCount++;
+                    }
+                });
+
+                return {
+                    attendanceDate: attendanceDate,
+                    present: presentCount,
+                    absent: absentCount,
+                };
+            }
+        });
+        await setResultArray(processedArray);
+
+    }
+
+    useEffect(() => {
+        processInputArray();
+    }, [attendance]);
 
     const next = () => {
         setToday(prev => prev.clone().add(1, 'month'));

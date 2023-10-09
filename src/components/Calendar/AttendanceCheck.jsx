@@ -4,6 +4,8 @@ import { getGroup } from '../../function/getGroup';
 import { useState } from 'react';
 import { getGroupAttendance } from '../../function/getGroupAttendance';
 import { Student } from './Student';
+import { getStudentsByGroup } from '../../function/getStudentsByGroup';
+import { postAttendance } from '../../function/postAttendance';
 
 export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setModalVision }) => {
 
@@ -18,7 +20,7 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setMod
     const handleAttendanceChange = (studentId, value) => {
         setAttendance((prevStudents) =>
             prevStudents.map((student) =>
-                student.studentId === studentId
+                student.studentId === studentId || student.id === studentId
                     ? { ...student, attendanceStatus: value }
                     : student
             )
@@ -30,29 +32,68 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setMod
     };
 
     useEffect(() => {
+
+        async function fetchDataAttendance() {
+            try {
+                const response = await getGroupAttendance(groupId, choosenDay, PATH, TOKEN, AUTH);
+                const data = await response.json();
+                if (await data?.studentsAttendances[0]?.studentsStatuses) {
+                    await setAttendance(data.studentsAttendances[0].studentsStatuses);
+                } else {
+                    await fetchEnrollees();
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
+
+        async function fetchEnrollees() {
+            try {
+                const response = await getStudentsByGroup(groupId, PATH, TOKEN, AUTH);
+                const data = await response.json();
+                if (await data[0]) {
+                    await setAttendance(data);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
+
         if (groupId) {
             fetchDataAttendance();
         }
-    }, [groupId, choosenDay])
 
 
-    async function fetchDataAttendance() {
-        const response = await getGroupAttendance(groupId, choosenDay, PATH, TOKEN, AUTH);
-        const data = await response.json();
-        if (data?.studentsAttendances[0]?.studentsStatuses) {
-            setAttendance(data.studentsAttendances[0].studentsStatuses);
-        }
-    }
+    }, [groupId, choosenDay, AUTH, PATH, TOKEN])
 
-    async function fetchData() {
-        const response = await getGroup(email, PATH, TOKEN, AUTH);
-        const data = await response.json();
-        setGroups(data);
-    }
 
     useEffect(() => {
+
+        async function fetchData() {
+            try {
+                const response = await getGroup(email, PATH, TOKEN, AUTH);
+                const data = await response.json();
+                await setGroups(data);
+            } catch (error) {
+                console.log(error)
+            }
+
+        }
+
         fetchData();
-    }, [])
+    }, [AUTH, PATH, TOKEN, email])
+
+    const postAttendanceFunc = () => {
+        const newAttendanceObject = {};
+        attendance.forEach((item) => {
+            const studentName = item.studentName || (item.firstname + item.lastname);
+            const attendanceStatus = item.attendanceStatus || undefined;
+            newAttendanceObject[studentName] = attendanceStatus;
+        });
+        postAttendance({ groupId, lessonDate: choosenDay, newAttendanceObject }, PATH, TOKEN, AUTH)
+    }
 
 
     return (
@@ -78,10 +119,10 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setMod
             </div>
             <div className={c.students}>
                 {attendance.map(item => (
-                    <Student handleAttendanceChange={handleAttendanceChange} studentId={item.studentId} studentName={item.studentName} state={item.attendanceStatus} />
+                    <Student key={item.studentId || item.id} handleAttendanceChange={handleAttendanceChange} studentId={item.studentId || item.id} studentName={item.studentName || item.firstname + ' ' + item.lastname} state={item.attendanceStatus || undefined} />
                 ))}
             </div>
-            <div className={c.saveCont}><div className={c.save}>Save</div></div>
+            <div className={c.saveCont}><div className={c.save} onClick={postAttendanceFunc}>Save</div></div>
         </div>
     )
 }
