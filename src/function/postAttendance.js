@@ -1,5 +1,5 @@
-export const postAttendance = (atendance, PATH, TOKEN, AUTH) => {
-    return fetch((`${PATH}/attendance`), {
+export const postAttendance = async (atendance, PATH, TOKEN, AUTH) => {
+    return await fetch((`${PATH}/attendance`), {
         method: 'POST',
         headers: {
             'accept': 'application/json',

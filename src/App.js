@@ -35,6 +35,15 @@ function App() {
   const [modalVision, setModalVision] = useState(false);
   const [choosenDay, setChoosenDay] = useState((moment()).format('YYYY-MM-DD'));
   const [groupId, setGroupId] = useState(false);
+  const [groupTitle, setGroupTitle] = useState('Please choose');
+  const [update, setUpdate] = useState(true);
+
+  const updater = () => {
+    setUpdate(false);
+    setTimeout(() => {
+      setUpdate(true);
+    }, 50);
+  }
 
   return (
     <div>
@@ -43,7 +52,7 @@ function App() {
       <div className={c.main}>
         <MainHeader theme={theme} setHide={setHide} hide={hide} />
         <Routes>
-          <Route path="/attendance" element={<MainContent groupId={groupId} setGroupId={setGroupId} choosenDay={choosenDay} setChoosenDay={setChoosenDay} setModalVision={setModalVision} />} />
+          <Route path="/attendance" element={update && <MainContent groupTitle={groupTitle} setGroupTitle={setGroupTitle} updater={updater} groupId={groupId} setGroupId={setGroupId} choosenDay={choosenDay} setChoosenDay={setChoosenDay} setModalVision={setModalVision} />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

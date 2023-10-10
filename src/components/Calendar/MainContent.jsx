@@ -7,7 +7,7 @@ import { HeaderAdd } from '../Header/HeaderAdd';
 import { AttendanceCheck } from './AttendanceCheck';
 import { getGroupAttendance } from '../../function/getGroupAttendance';
 
-export function MainContent({ groupId, setGroupId, setModalVision, choosenDay, setChoosenDay }) {
+export function MainContent({ groupTitle, setGroupTitle, updater, groupId, setGroupId, setModalVision, choosenDay, setChoosenDay }) {
 
     moment.updateLocale('en', { week: { dow: 1 } });
     const [today, setToday] = useState(() => {
@@ -27,21 +27,25 @@ export function MainContent({ groupId, setGroupId, setModalVision, choosenDay, s
     const AUTH = process.env.REACT_APP_AUTH;
     const PATH = process.env.REACT_APP_API_PATH;
 
-    useEffect(() => {
-        localStorage.setItem('today', JSON.stringify(today));
-    }, [today]);
-
     const startDay = today.clone().startOf('month').startOf('week');
 
     const previous = () => {
         setToday(prev => prev.clone().subtract(1, 'month'));
     }
 
+    const next = () => {
+        setToday(prev => prev.clone().add(1, 'month'));
+    }
+
+    useEffect(() => {
+        localStorage.setItem('today', JSON.stringify(today));
+    }, [today]);
+
     useEffect(() => {
 
         async function fetchDataAttendance() {
             if (groupId) {
-                const response = await getGroupAttendance(groupId, today.clone().startOf('month').startOf('week').format('YYYY-MM-DD'), PATH, TOKEN, AUTH, today.clone().endOf('month').endOf('week').format('YYYY-MM-DD'));
+                const response = await getGroupAttendance(groupId, today.clone().startOf('month').format('YYYY-MM-DD'), PATH, TOKEN, AUTH, today.clone().endOf('month').format('YYYY-MM-DD'));
                 const data = await response.json();
                 setAttendance(data.studentsAttendances);
             }
@@ -50,41 +54,40 @@ export function MainContent({ groupId, setGroupId, setModalVision, choosenDay, s
         fetchDataAttendance();
     }, [today, PATH, TOKEN, AUTH, groupId])
 
-    const processInputArray = async () => {
-        const processedArray = await attendance.map((item) => {
-            if (item.studentsStatuses) {
-                const attendanceDate = item.attendanceDate;
-                const studentsStatuses = item.studentsStatuses;
-
-                let presentCount = 0;
-                let absentCount = 0;
-
-                studentsStatuses.forEach((student) => {
-                    if (student.attendanceStatus === "present") {
-                        presentCount++;
-                    } else if (student.attendanceStatus === "absent") {
-                        absentCount++;
-                    }
-                });
-
-                return {
-                    attendanceDate: attendanceDate,
-                    present: presentCount,
-                    absent: absentCount,
-                };
-            }
-        });
-        await setResultArray(processedArray);
-
-    }
 
     useEffect(() => {
+
+        const processInputArray = async () => {
+            const processedArray = await attendance.map((item) => {
+                if (item.studentsStatuses) {
+                    const attendanceDate = item.attendanceDate;
+                    const studentsStatuses = item.studentsStatuses;
+
+                    let presentCount = 0;
+                    let absentCount = 0;
+
+                    studentsStatuses.forEach((student) => {
+                        if (student.attendanceStatus === "present") {
+                            presentCount++;
+                        } else if (student.attendanceStatus === "absent") {
+                            absentCount++;
+                        }
+                    });
+
+                    return {
+                        attendanceDate: attendanceDate,
+                        present: presentCount,
+                        absent: absentCount,
+                    };
+                }
+                return null;
+            });
+            await setResultArray(processedArray);
+
+        }
+
         processInputArray();
     }, [attendance]);
-
-    const next = () => {
-        setToday(prev => prev.clone().add(1, 'month'));
-    }
 
     return (
         <>
@@ -99,7 +102,7 @@ export function MainContent({ groupId, setGroupId, setModalVision, choosenDay, s
                     />
                     <CalendarGrid choosenDay={choosenDay} setChoosenDay={setChoosenDay} startDay={startDay} today={today} attendanceList={resultArray} />
                 </div>
-                <AttendanceCheck setModalVision={setModalVision} setGroupId={setGroupId} groupId={groupId} choosenDay={choosenDay} email='user1@example.com' />
+                <AttendanceCheck groupTitle={groupTitle} setGroupTitle={setGroupTitle} updater={updater} setModalVision={setModalVision} setGroupId={setGroupId} groupId={groupId} choosenDay={choosenDay} email='user3@example.com' />
             </div>
         </>
     )

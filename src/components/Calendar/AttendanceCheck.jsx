@@ -7,10 +7,9 @@ import { Student } from './Student';
 import { getStudentsByGroup } from '../../function/getStudentsByGroup';
 import { postAttendance } from '../../function/postAttendance';
 
-export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setModalVision }) => {
+export const AttendanceCheck = ({ groupTitle, setGroupTitle, updater, groupId, setGroupId, choosenDay, email, setModalVision }) => {
 
     const [groups, setGroups] = useState([]);
-    const [group, setGroup] = useState('Please choose');
     const [attendance, setAttendance] = useState([]);
 
     const TOKEN = process.env.REACT_APP_TOKEN;
@@ -32,7 +31,7 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setMod
     };
 
     useEffect(() => {
-
+        setAttendance([]);
         async function fetchDataAttendance() {
             try {
                 const response = await getGroupAttendance(groupId, choosenDay, PATH, TOKEN, AUTH);
@@ -52,7 +51,7 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setMod
             try {
                 const response = await getStudentsByGroup(groupId, PATH, TOKEN, AUTH);
                 const data = await response.json();
-                if (await data[0]) {
+                if (data[0]) {
                     await setAttendance(data);
                 }
             } catch (error) {
@@ -85,14 +84,17 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setMod
         fetchData();
     }, [AUTH, PATH, TOKEN, email])
 
-    const postAttendanceFunc = () => {
+    const postAttendanceFunc = async () => {
         const newAttendanceObject = {};
         attendance.forEach((item) => {
-            const studentName = item.studentName || (item.firstname + item.lastname);
+            const studentName = item.studentId || item.id;
             const attendanceStatus = item.attendanceStatus || undefined;
             newAttendanceObject[studentName] = attendanceStatus;
         });
-        postAttendance({ groupId, lessonDate: choosenDay, newAttendanceObject }, PATH, TOKEN, AUTH)
+        await postAttendance({ groupId, lessonDate: choosenDay, newAttendanceObject }, PATH, TOKEN, AUTH)
+        await setTimeout(() => {
+            updater();
+        }, 5000);
     }
 
 
@@ -101,7 +103,7 @@ export const AttendanceCheck = ({ groupId, setGroupId, choosenDay, email, setMod
             <div className={c.header}>
                 <div className={c.flex}>
                     <p className={c.att}>Attendance for</p>
-                    <select value={group} onChange={(e) => setGroup(e.target.value)} className={c.select}>
+                    <select value={groupTitle} onChange={(e) => setGroupTitle(e.target.value)} className={c.select}>
                         <option>Please choose</option>
                         {groups.map(((item) => {
                             return (
