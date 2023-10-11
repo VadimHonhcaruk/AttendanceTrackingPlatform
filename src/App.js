@@ -10,6 +10,7 @@ import { NotFound } from "./components/NotFound/NotFound";
 import c from './App.module.css';
 import Modal from "./components/Calendar/Modal";
 import moment from "moment/moment";
+import { List } from "./components/List/List";
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         <MainHeader theme={theme} setHide={setHide} hide={hide} />
         <Routes>
           <Route path="/attendance" element={update && <MainContent groupTitle={groupTitle} setGroupTitle={setGroupTitle} updater={updater} groupId={groupId} setGroupId={setGroupId} choosenDay={choosenDay} setChoosenDay={setChoosenDay} setModalVision={setModalVision} />} />
+          <Route path="/students" element={<List />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

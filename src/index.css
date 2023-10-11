@@ -43,6 +43,7 @@ code {
   --cell-color: #1f2937;
   --cell-choosenDay-color: #526888;
   --cell-hover-color: #364458;
+  --tr-color: #1d2734;
 }
 
 [data-theme="light"] {
@@ -63,4 +64,5 @@ code {
   --cell-color: #ebedf0;
   --cell-choosenDay-color: #d2def0;
   --cell-hover-color: #c7cdd6;
+  --tr-color: #f2f2f2;
 }
