@@ -10,7 +10,6 @@
 .main {
   width: 85%;
   border-radius: 0.5rem;
-  min-height: 30rem;
   background-color: var(--header-color);
   filter: drop-shadow(1px 1px 1px var(--dropshadow-color));
   padding: 1rem;

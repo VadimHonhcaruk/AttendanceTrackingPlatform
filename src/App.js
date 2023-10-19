@@ -54,7 +54,8 @@ function App() {
         <MainHeader theme={theme} setHide={setHide} hide={hide} />
         <Routes>
           <Route path="/attendance" element={update && <MainContent groupTitle={groupTitle} setGroupTitle={setGroupTitle} updater={updater} groupId={groupId} setGroupId={setGroupId} choosenDay={choosenDay} setChoosenDay={setChoosenDay} setModalVision={setModalVision} />} />
-          <Route path="/students" element={<List />} />
+          <Route path="/students" element={<List get='students' />} />
+          <Route path="/parents" element={<List get='parents' />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
