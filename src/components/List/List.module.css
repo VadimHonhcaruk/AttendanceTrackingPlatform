@@ -38,7 +38,7 @@ td {
   box-sizing: border-box;
 }
 
-col:nth-child(1) {
+/* col:nth-child(1) {
   width: 20%;
 }
 
@@ -52,4 +52,36 @@ col:nth-child(3) {
 
 col:nth-child(4) {
   width: 30%;
+} */
+
+.col1 {
+  width: 20%;
+}
+
+.col2 {
+  width: 20%;
+}
+
+.col3 {
+  width: 30%;
+}
+
+.col4 {
+  width: 30%;
+}
+
+.th1 {
+  width: 10%;
+}
+.th2 {
+  width: 10%;
+}
+
+.th3 {
+  width: 30%;
+}
+
+.th4,
+.th5 {
+  width: 20%;
 }

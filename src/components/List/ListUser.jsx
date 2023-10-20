@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { HeaderAdd } from '../Header/HeaderAdd';
 import c from './List.module.css';
-import { getStudents } from '../../function/getStudents';
-import { getRepresentive } from '../../function/getRepresentive';
+import { getUsers } from '../../function/getUsers';
 
-
-export const List = ({ get }) => {
+export const ListUser = ({ get }) => {
 
 
     const TOKEN = process.env.REACT_APP_TOKEN;
@@ -16,40 +14,32 @@ export const List = ({ get }) => {
 
 
     useEffect(() => {
-        async function fetchDataStudents() {
-            const response = await getStudents(PATH, TOKEN, AUTH);
+        async function fetchDataUsers() {
+            const response = await getUsers(PATH, TOKEN, AUTH);
             const data = await response.json();
             setInfo(data);
         }
 
-        async function fetchDataRepresentive() {
-            const response = await getRepresentive(PATH, TOKEN, AUTH);
-            const data = await response.json();
-            setInfo(data);
-        }
-
-        if (get === 'Student') {
-            fetchDataStudents();
-        } else {
-            fetchDataRepresentive();
-        }
+        fetchDataUsers();
     }, [TOKEN, AUTH, PATH, get])
 
 
     return (
         <div>
-            <HeaderAdd title={`${get} List`} />
+            <HeaderAdd title='User List' />
             <div className={c.listCont}>
                 <div className={c.main}>
                     <table className={c.table}>
-                        <col className={c.col1} />
-                        <col className={c.col2} />
-                        <col className={c.col3} />
-                        <col className={c.col4} />
+                        <col className={c.th1} />
+                        <col className={c.th2} />
+                        <col className={c.th3} />
+                        <col className={c.th4} />
+                        <col className={c.th5} />
                         <tr>
                             <th>FIRST</th>
                             <th>LAST</th>
                             <th>EMAIL</th>
+                            <th>TYPE</th>
                             <th>MOBILE PHONE</th>
                         </tr>
                         {info[0] && info.map((obj) => {
@@ -57,6 +47,7 @@ export const List = ({ get }) => {
                                 <td>{obj.firstname}</td>
                                 <td>{obj.lastname}</td>
                                 <td>{obj.email}</td>
+                                <td>{obj.usertype}</td>
                                 <td>{obj.phoneNumber}</td>
                             </tr>)
                         })
