@@ -1,9 +1,11 @@
 .mainHeader {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 10%;
   height: 4rem;
+  z-index: 10000;
   background-color: var(--header-color);
   filter: drop-shadow(1px 1px 1px var(--dropshadow-color));
 }

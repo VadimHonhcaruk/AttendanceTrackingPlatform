@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { HeaderAdd } from '../Header/HeaderAdd';
 import c from './List.module.css';
-import { getUsers } from '../../function/getUsers';
+import { getGroups } from '../../function/getGroups';
 
-export const ListUser = ({ get }) => {
+export const ListClasses = ({ get }) => {
 
 
     const TOKEN = process.env.REACT_APP_TOKEN;
@@ -17,10 +17,11 @@ export const ListUser = ({ get }) => {
 
     const [amount, setAmount] = useState(0);
 
+
     useEffect(() => {
         async function fetchDataUsers() {
             try {
-                const response = await getUsers(PATH, TOKEN, AUTH);
+                const response = await getGroups(PATH, TOKEN, AUTH);
                 const data = await response.json();
                 setInfo(data);
             } catch (error) {
@@ -34,65 +35,42 @@ export const ListUser = ({ get }) => {
     useEffect(() => {
         setSortedInfo(info);
         setAmount(info.length);
-    }, [info]);
+    }, [info])
 
     useEffect(() => {
         switch (sortType) {
-            case 'first':
+            case 'description':
                 const sortedData = [...sortedInfo];
-                sortedData.sort((a, b) => a.firstname.localeCompare(b.firstname));
+                sortedData.sort((a, b) => a.title.localeCompare(b.title));
                 setSortedInfo(sortedData);
                 break;
-            case 'firstSWAP':
+            case 'descriptionSWAP':
                 const sortedData11 = [...sortedInfo];
-                sortedData11.sort((b, a) => a.firstname.localeCompare(b.firstname));
+                sortedData11.sort((b, a) => a.title.localeCompare(b.title));
                 setSortedInfo(sortedData11);
                 break;
-            case 'last':
+            case 'lesson':
                 const sortedData2 = [...sortedInfo];
-                sortedData2.sort((a, b) => a.lastname.localeCompare(b.lastname));
+                console.log(sortedData2);
+                sortedData2.sort((a, b) => a.expectedNumberOfLessonsPerMonth.toString().localeCompare(b.expectedNumberOfLessonsPerMonth));
                 setSortedInfo(sortedData2);
                 break;
-            case 'lastSWAP':
+            case 'lessonSWAP':
                 const sortedData22 = [...sortedInfo];
-                sortedData22.sort((b, a) => a.lastname.localeCompare(b.lastname));
+                sortedData22.sort((b, a) => a.expectedNumberOfLessonsPerMonth.toString().localeCompare(b.expectedNumberOfLessonsPerMonth));
                 setSortedInfo(sortedData22);
                 break;
-            case 'mobile':
-                const sortedData3 = [...sortedInfo];
-                sortedData3.sort((a, b) => a.phoneNumber.localeCompare(b.phoneNumber));
-                setSortedInfo(sortedData3);
-                break;
-            case 'mobileSWAP':
-                const sortedData33 = [...sortedInfo];
-                sortedData33.sort((b, a) => a.phoneNumber.localeCompare(b.phoneNumber));
-                setSortedInfo(sortedData33);
-                break;
-            case 'email':
-                const sortedData4 = [...sortedInfo];
-                sortedData4.sort((a, b) => a.email.localeCompare(b.email));
-                setSortedInfo(sortedData4);
-                break;
-            case 'emailSWAP':
-                const sortedData44 = [...sortedInfo];
-                sortedData44.sort((b, a) => a.email.localeCompare(b.email));
-                setSortedInfo(sortedData44);
-                break;
-
             default:
                 break;
         }
     }, [sortType, info]);
 
-
     useEffect(() => {
         setSortedInfo(info);
         setSortedInfo((prev) => prev.filter((obj) => {
             return (
-                obj.firstname.toLowerCase().includes(filter.toLowerCase()) ||
-                obj.lastname.toLowerCase().includes(filter.toLowerCase()) ||
-                obj.email.toLowerCase().includes(filter.toLowerCase()) ||
-                obj.phoneNumber.includes(filter)
+                obj.title.toLowerCase().includes(filter.toLowerCase()) ||
+                obj.expectedNumberOfLessonsPerMonth.toString().includes(filter)
             );
         }));
         if (sortType) {
@@ -106,7 +84,7 @@ export const ListUser = ({ get }) => {
 
     return (
         <div>
-            <HeaderAdd title={`View ${amount} users`} get={get} />
+            <HeaderAdd title={`View ${amount} groups`} get={get} />
             <div className={c.listCont}>
                 <div className={c.main}>
                     <div className={c.headerTable}>
@@ -114,18 +92,16 @@ export const ListUser = ({ get }) => {
                         <input className={c.input} type="text" placeholder="Search..." value={filter} onChange={(e) => { setFilter(e.target.value) }} />
                     </div>
                     <table className={c.table}>
+                        <col className={c.th6} />
+                        <col className={c.th7} />
                         <tr>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'first' ? 'firstSWAP' : 'first')}>FIRST</th>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'last' ? 'lastSWAP' : 'last')}>LAST</th>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'email' ? 'emailSWAP' : 'email')}>EMAIL</th>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'mobile' ? 'mobileSWAP' : 'mobile')}>MOBILE PHONE</th>
+                            <th className={c.curs} onClick={() => setSortType(sortType === 'description' ? 'descriptionSWAP' : 'description')}>DESCRIPTION</th>
+                            <th className={c.curs} onClick={() => setSortType(sortType === 'lesson' ? 'lessonSWAP' : 'lesson')}>LESSON COUNT</th>
                         </tr>
                         {sortedInfo[0] && sortedInfo.map((obj) => {
                             return (<tr>
-                                <td>{obj.firstname}</td>
-                                <td>{obj.lastname}</td>
-                                <td>{obj.email}</td>
-                                <td>{obj.phoneNumber}</td>
+                                <td>{obj.title}</td>
+                                <td>{obj.expectedNumberOfLessonsPerMonth}</td>
                             </tr>)
                         })
 

@@ -12,6 +12,7 @@ import Modal from "./components/Calendar/Modal";
 import moment from "moment/moment";
 import { List } from "./components/List/List";
 import { ListUser } from "./components/List/ListUser";
+import { ListClasses } from "./components/List/ListClasses";
 
 
 function App() {
@@ -55,9 +56,10 @@ function App() {
         <MainHeader theme={theme} setHide={setHide} hide={hide} />
         <Routes>
           <Route path="/attendance" element={update && <MainContent groupTitle={groupTitle} setGroupTitle={setGroupTitle} updater={updater} groupId={groupId} setGroupId={setGroupId} choosenDay={choosenDay} setChoosenDay={setChoosenDay} setModalVision={setModalVision} />} />
-          <Route path="/students" element={<List get='Student' />} />
-          <Route path="/parents" element={<List get='Parent' />} />
-          <Route path="/users" element={<ListUser get='User' />} />
+          <Route path="/students" element={<List get='student' />} />
+          <Route path="/parents" element={<List get='representive' />} />
+          <Route path="/users" element={<ListUser get='user' />} />
+          <Route path="/classes" element={<ListClasses get='group' />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
