@@ -17,6 +17,8 @@ export const List = ({ get }) => {
     const [sortType, setSortType] = useState('');
     const [amount, setAmount] = useState(0);
     const [filter, setFilter] = useState('');
+    const [type, setType] = useState('Active only');
+    const [status, setStatus] = useState('active');
 
 
     useEffect(() => {
@@ -119,7 +121,11 @@ export const List = ({ get }) => {
             <div className={c.listCont}>
                 <div className={c.main}>
                     <div className={c.headerTable}>
-                        <div className={c.butt}>Add {get}</div>
+                        <select value={type} onChange={(e) => setType(e.target.value)} className={c.select}>
+                            <option onClick={() => setStatus('active')}>Active only</option>
+                            <option onClick={() => setStatus('inactive')}>Archived only</option>
+                            <option onClick={() => setStatus('')}>All</option>
+                        </select>
                         <input className={c.input} type="text" placeholder="Search..." value={filter} onChange={(e) => { setFilter(e.target.value) }} />
                     </div>
                     <table className={c.table}>
@@ -129,11 +135,14 @@ export const List = ({ get }) => {
                             <th className={c.curs} onClick={() => setSortType(sortType === 'mobile' ? 'mobileSWAP' : 'mobile')}><div className={c.curs}>MOBILE PHONE</div></th>
                         </tr>
                         {sortedInfo[0] && sortedInfo.map((obj) => {
-                            return (<tr>
-                                <td>{obj.firstname}</td>
-                                <td>{obj.lastname}</td>
-                                <td>{obj.phoneNumber}</td>
-                            </tr>)
+                            if (obj.status === status || !status) {
+                                return (<tr>
+                                    <td>{obj.firstname}</td>
+                                    <td>{obj.lastname}</td>
+                                    <td>{obj.phoneNumber}</td>
+                                </tr>)
+                            }
+                            return null;
                         })
 
                         }

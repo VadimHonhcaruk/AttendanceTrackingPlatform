@@ -14,6 +14,8 @@ export const ListClasses = ({ get }) => {
     const [sortedInfo, setSortedInfo] = useState([]);
     const [sortType, setSortType] = useState('');
     const [filter, setFilter] = useState('');
+    const [type, setType] = useState('Active only');
+    const [status, setStatus] = useState('active');
 
     const [amount, setAmount] = useState(0);
 
@@ -52,12 +54,12 @@ export const ListClasses = ({ get }) => {
             case 'lesson':
                 const sortedData2 = [...sortedInfo];
                 console.log(sortedData2);
-                sortedData2.sort((a, b) => a.expectedNumberOfLessonsPerMonth.toString().localeCompare(b.expectedNumberOfLessonsPerMonth));
+                sortedData2.sort((a, b) => a.expectedNumberOfLessonsPerMonth - b.expectedNumberOfLessonsPerMonth);
                 setSortedInfo(sortedData2);
                 break;
             case 'lessonSWAP':
                 const sortedData22 = [...sortedInfo];
-                sortedData22.sort((b, a) => a.expectedNumberOfLessonsPerMonth.toString().localeCompare(b.expectedNumberOfLessonsPerMonth));
+                sortedData22.sort((b, a) => a.expectedNumberOfLessonsPerMonth - b.expectedNumberOfLessonsPerMonth);
                 setSortedInfo(sortedData22);
                 break;
             default:
@@ -88,7 +90,11 @@ export const ListClasses = ({ get }) => {
             <div className={c.listCont}>
                 <div className={c.main}>
                     <div className={c.headerTable}>
-                        <div className={c.butt}>Add {get}</div>
+                        <select value={type} onChange={(e) => setType(e.target.value)} className={c.select}>
+                            <option onClick={() => setStatus('active')}>Active only</option>
+                            <option onClick={() => setStatus('archived')}>Archived only</option>
+                            <option onClick={() => setStatus('')}>All</option>
+                        </select>
                         <input className={c.input} type="text" placeholder="Search..." value={filter} onChange={(e) => { setFilter(e.target.value) }} />
                     </div>
                     <table className={c.table}>
@@ -99,10 +105,13 @@ export const ListClasses = ({ get }) => {
                             <th className={c.curs} onClick={() => setSortType(sortType === 'lesson' ? 'lessonSWAP' : 'lesson')}>LESSON COUNT</th>
                         </tr>
                         {sortedInfo[0] && sortedInfo.map((obj) => {
-                            return (<tr>
-                                <td>{obj.title}</td>
-                                <td>{obj.expectedNumberOfLessonsPerMonth}</td>
-                            </tr>)
+                            if (obj.status === status || !status) {
+                                return (<tr>
+                                    <td>{obj.title}</td>
+                                    <td>{obj.expectedNumberOfLessonsPerMonth}</td>
+                                </tr>)
+                            }
+                            return null;
                         })
 
                         }

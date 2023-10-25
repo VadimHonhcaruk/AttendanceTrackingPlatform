@@ -128,3 +128,16 @@ col:nth-child(4) {
 .butt:hover {
   background-color: #3159b7;
 }
+
+.select {
+  border-radius: 0;
+  border: 1px solid var(--border-cell-color);
+  color: var(--text-color);
+  background-color: var(--cell-not-color);
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+}
+
+th:hover {
+  background-color: var(--border-cell-color);
+}

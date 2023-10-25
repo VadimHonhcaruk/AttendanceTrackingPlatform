@@ -31,3 +31,10 @@
 .butt:hover {
   background-color: #3159b7;
 }
+
+.butt,
+.butt:active,
+.butt:hover {
+  text-decoration: none;
+  color: #ffffff;
+}
