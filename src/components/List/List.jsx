@@ -116,7 +116,7 @@ export const List = ({ get }) => {
 
 
     return (
-        <div>
+        <>
             <HeaderAdd title={`View ${amount} ${get}s`} get={get} />
             <div className={c.listCont}>
                 <div className={c.main}>
@@ -149,6 +149,6 @@ export const List = ({ get }) => {
                     </table>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

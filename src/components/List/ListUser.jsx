@@ -107,7 +107,7 @@ export const ListUser = ({ get }) => {
     }, [info, filter])
 
     return (
-        <div>
+        <>
             <HeaderAdd title={`View ${amount} users`} get={get} />
             <div className={c.listCont}>
                 <div className={c.main}>
@@ -142,6 +142,6 @@ export const ListUser = ({ get }) => {
                     </table>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

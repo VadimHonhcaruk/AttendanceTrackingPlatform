@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { Login } from "./components/Login/Login";
-import { Profile } from "./components/Profile/Profile";
+import { useState } from "react";
 import { MainContent } from "./components/Calendar/MainContent";
 import { MainHeader } from "./components/MainHeader/MainHeader";
 import { useTheme } from "./hooks/useTheme";
@@ -13,6 +11,7 @@ import moment from "moment/moment";
 import { List } from "./components/List/List";
 import { ListUser } from "./components/List/ListUser";
 import { ListClasses } from "./components/List/ListClasses";
+import { CreatePage } from "./components/CreatePage/CreatePage";
 
 
 function App() {
@@ -23,17 +22,6 @@ function App() {
     theme === 'light' ? setTheme('dark') : setTheme('light');
   }
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
-
-  const [firstNameState, setFirstName] = useState('Vadim');
-  const [secondNameState, setSecondName] = useState('Honcharuk');
-  const [birthday, setBirth] = useState('07-06-2003');
-  const [phoneState, setPhone] = useState('+380983169348');
-  const [emailState, setEmailState] = useState('vadimhonc@gmail.com');
-  const [cardState, setCard] = useState('5656 7156 3895 8035');
-  const [active, setActive] = useState('Active');
   const [hide, setHide] = useState(true);
   const [modalVision, setModalVision] = useState(false);
   const [choosenDay, setChoosenDay] = useState((moment()).format('YYYY-MM-DD'));
@@ -60,6 +48,7 @@ function App() {
           <Route path="/parents" element={<List get='representive' />} />
           <Route path="/users" element={<ListUser get='user' />} />
           <Route path="/classes" element={<ListClasses get='group' />} />
+          <Route path="/create/student" element={<CreatePage />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

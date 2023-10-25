@@ -85,7 +85,7 @@ export const ListClasses = ({ get }) => {
     }, [info, filter])
 
     return (
-        <div>
+        <>
             <HeaderAdd title={`View ${amount} groups`} get={get} />
             <div className={c.listCont}>
                 <div className={c.main}>
@@ -118,6 +118,6 @@ export const ListClasses = ({ get }) => {
                     </table>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

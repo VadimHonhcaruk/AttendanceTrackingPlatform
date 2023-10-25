@@ -3,7 +3,7 @@ import c from "./HeaderAdd.module.css";
 import { Link } from 'react-router-dom';
 
 
-export const HeaderAdd = ({ title, get, link }) => {
+export const HeaderAdd = ({ title, get }) => {
     return (
         <div className={c.header}>
             <p className={c.who}>{title}</p>
