@@ -3,7 +3,7 @@ import { MainContent } from "./components/Calendar/MainContent";
 import { MainHeader } from "./components/MainHeader/MainHeader";
 import { useTheme } from "./hooks/useTheme";
 import { NavSideBar } from "./components/NavSideBar/NavSideBar";
-import { Route, Routes, Link, path } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import { NotFound } from "./components/NotFound/NotFound";
 import c from './App.module.css';
 import Modal from "./components/Calendar/Modal";
@@ -45,10 +45,12 @@ function App() {
         <Routes>
           <Route path="/attendance" element={update && <MainContent groupTitle={groupTitle} setGroupTitle={setGroupTitle} updater={updater} groupId={groupId} setGroupId={setGroupId} choosenDay={choosenDay} setChoosenDay={setChoosenDay} setModalVision={setModalVision} />} />
           <Route path="/students" element={<List get='student' />} />
-          <Route path="/parents" element={<List get='representive' />} />
+          <Route path="/parents" element={<List get='representative' />} />
           <Route path="/users" element={<ListUser get='user' />} />
           <Route path="/classes" element={<ListClasses get='group' />} />
-          <Route path="/create/student" element={<CreatePage />} />
+          <Route path="/create/student" element={<CreatePage get='student' email='user1@example.com' />} />
+          <Route path="/create/user" element={<CreatePage get='user' email='user1@example.com' />} />
+          <Route path="/create/representative" element={<CreatePage get='representative' email='user1@example.com' />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

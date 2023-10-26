@@ -53,6 +53,121 @@
   border: 1px solid rgb(156, 74, 74);
 }
 
+.error {
+  border: 1px solid rgb(156, 74, 74);
+}
+
 .label {
   color: var(--text-color);
+}
+
+.flex {
+  display: flex;
+  width: 65%;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.inputCont {
+  display: flex;
+  flex-direction: column;
+}
+
+.day {
+  width: 4rem;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.flexCont {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputContMain {
+  width: 60%;
+}
+
+.select {
+  margin-top: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40%;
+  padding-right: 3rem;
+  box-sizing: border-box;
+  min-height: 20rem;
+}
+
+.item {
+  color: var(--text-color);
+  height: 3rem;
+  padding: 0 1rem;
+  width: fit-content;
+  min-width: fit-content;
+  margin: 0.2rem;
+  margin-left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--main-background-color);
+  border: 1px solid var(--border-color);
+}
+
+.item:hover {
+  background-color: rgb(148, 50, 50);
+  cursor: pointer;
+  color: white;
+}
+
+.groups {
+  display: flex;
+  overflow-x: auto;
+  height: 5rem;
+  width: 100%;
+}
+
+b {
+  margin-left: 0.5rem;
+  font-size: 1.4rem;
+  color: rgb(229, 114, 114);
+}
+
+.butt {
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  font-weight: 900;
+  color: white;
+  width: fit-content;
+  background-color: #4c78dd;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+
+.butt:hover {
+  background-color: #3159b7;
+}
+
+.butt,
+.butt:active,
+.butt:hover {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.flexEnd {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
