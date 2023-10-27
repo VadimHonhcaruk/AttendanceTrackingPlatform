@@ -11,7 +11,7 @@ import { getRepresentive } from '../../function/getRepresentive';
 import { getStudents } from '../../function/getStudents';
 import { isValid as isValidCard } from 'creditcard.js';
 import { cardInputChange } from '../../function/cardInput';
-import { validate } from 'email-validator';
+import { getUsers } from '../../function/getUsers';
 var validator = require("email-validator");
 
 const now = new Date();
@@ -24,6 +24,8 @@ export const CreatePage = ({ email, get }) => {
     const [year, setYear] = useState('');
     const [month, setMonth] = useState('');
     const [day, setDay] = useState('');
+    const [lessons, setLessons] = useState('8');
+    const [groupName, setGroupName] = useState('');
     const [phone, setPhone] = useState('');
     const [error, setError] = useState(false);
     const [groups, setGroups] = useState([]);
@@ -31,8 +33,11 @@ export const CreatePage = ({ email, get }) => {
     const [selectedGroups, setSelectedGroups] = useState([]);
     const [card, setCard] = useState('');
     const [representative, setRepresentative] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [userOption, setUserOption] = useState('Connect');
     const [representativeOption, setRepresentativeOption] = useState('Connect');
     const [selectedRepresentatives, setSelectedRepresentatives] = useState([]);
+    const [selectedUsers, setSelectedUsers] = useState([]);
     const [cardError, setCardError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [passError, setPassError] = useState(false);
@@ -126,13 +131,27 @@ export const CreatePage = ({ email, get }) => {
             }
         }
 
+        async function fetchDataUser() {
+            try {
+                const response = await getUsers(PATH, TOKEN, AUTH);
+                const data = await response.json();
+                setUsers(data);
+            }
+            catch (error) {
+                console.log('Network error: ', error)
+            }
+        }
+
         if (get === 'student') {
             fetchData();
             fetchDataRepresentive();
         } else if (get === 'representetive') {
             fetchDataStudent();
-        } else {
+        } else if (get === 'user') {
             fetchData();
+        } else {
+            fetchDataUser();
+            fetchDataStudent();
         }
     }, [AUTH, PATH, TOKEN, email, get]);
 
@@ -162,6 +181,19 @@ export const CreatePage = ({ email, get }) => {
         setSelectedRepresentatives(updatedRep);
     };
 
+    const handleUserSelect = (user) => {
+        const userExists = selectedUsers.some((selectedUser) => selectedUser.id === user.id);
+
+        if (!userExists) {
+            setSelectedUsers(prev => [...prev, user]);
+        }
+    };
+
+    const handleUserRemove = (user) => {
+        const updatedUser = selectedUsers.filter((selectedUser) => selectedUser.id !== user.id);
+        setSelectedUsers(updatedUser);
+    };
+
     return (
         <>
             <HeaderAdd title={`Create ${get}`} />
@@ -170,35 +202,36 @@ export const CreatePage = ({ email, get }) => {
                     <div className={c.details}>{get.toUpperCase()} DETAILS</div>
                     <div className={c.flexCont}>
                         <div className={c.inputContMain}>
-                            <div className={c.flex}>
-                                <Input label='First name' name={first} setName={setFirst} pattern="[А-Яа-яЁёІіЇїЄє]+" />
-                                <Input label='Last name' name={last} setName={setLast} pattern="[А-Яа-яЁёІіЇїЄє]+" />
-                            </div>
-                            <div className={c.flex}>
-                                <Input label='Day' onInput={onlyNumb} name={day} style={error ? c.day + ' ' + c.error : c.day} setName={setDay} maxLength={2} pattern="^(0?[1-9]|[12]\d|3[01])$" />
-                                <div className={c.inputCont}>
-                                    <label className={c.label}>Month</label>
-                                    <select className={error ? c.input + ' ' + c.error : c.input} value={month} onInput={(e) => { setMonth(e.target.value); }}>
-                                        <option value="" hidden></option>
-                                        <option value="1">January</option>
-                                        <option value="2">February</option>
-                                        <option value="3">March</option>
-                                        <option value="4">April</option>
-                                        <option value="5">May</option>
-                                        <option value="6">June</option>
-                                        <option value="7">July</option>
-                                        <option value="8">August</option>
-                                        <option value="9">September</option>
-                                        <option value="10">October</option>
-                                        <option value="11">November</option>
-                                        <option value="12">December</option>
-                                    </select>
+                            {get !== 'group' && <>
+                                <div className={c.flex}>
+                                    <Input label='First name' name={first} setName={setFirst} pattern="[А-Яа-яЁёІіЇїЄє]+" />
+                                    <Input label='Last name' name={last} setName={setLast} pattern="[А-Яа-яЁёІіЇїЄє]+" />
                                 </div>
-                                <Input type='number' label='Year' style={error ? c.day + ' ' + c.error : c.day} onInput={(e) => { onlyNumb(e); limitInputLength(e); }} maxLength="4" name={year} setName={setYear} min={now.getFullYear() - 100} max={now.getFullYear() - 5} />
-                            </div>
-                            <div className={c.flex}>
-                                <Input label='Phone' name={phone} setName={setPhone} maxLength="19" onfocus={onfocusInput} onBlur={onblurInput} onInput={inputChange} pattern="^\+38\s\(0\d{2}\)\s\d{3}\s\d{2}\s\d{2}$" />
-                            </div>
+                                <div className={c.flex}>
+                                    <Input label='Day' onInput={onlyNumb} name={day} style={error ? c.day + ' ' + c.error : c.day} setName={setDay} maxLength={2} pattern="^(0?[1-9]|[12]\d|3[01])$" />
+                                    <div className={c.inputCont}>
+                                        <label className={c.label}>Month</label>
+                                        <select className={error ? c.input + ' ' + c.error : c.input} value={month} onInput={(e) => { setMonth(e.target.value); }}>
+                                            <option value="" hidden></option>
+                                            <option value="1">January</option>
+                                            <option value="2">February</option>
+                                            <option value="3">March</option>
+                                            <option value="4">April</option>
+                                            <option value="5">May</option>
+                                            <option value="6">June</option>
+                                            <option value="7">July</option>
+                                            <option value="8">August</option>
+                                            <option value="9">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <Input type='number' label='Year' style={error ? c.day + ' ' + c.error : c.day} onInput={(e) => { onlyNumb(e); limitInputLength(e); }} maxLength="4" name={year} setName={setYear} min={now.getFullYear() - 100} max={now.getFullYear() - 5} />
+                                </div>
+                                <div className={c.flex}>
+                                    <Input label='Phone' name={phone} setName={setPhone} maxLength="19" onfocus={onfocusInput} onBlur={onblurInput} onInput={inputChange} pattern="^\+38\s\(0\d{2}\)\s\d{3}\s\d{2}\s\d{2}$" />
+                                </div></>}
                             {get === 'user' && <>
                                 <div className={c.flex}>
                                     <Input style={cardError && c.error} maxLength="19" onInput={cardInputChange} label='Bank card' name={card} setName={setCard} />
@@ -209,6 +242,14 @@ export const CreatePage = ({ email, get }) => {
                                 <div className={c.flex}>
                                     <Input style={passError && c.error} label='Password' name={pass} setName={setPass} />
                                     <Input style={passError && c.error} label='Confirm password' name={pass2} setName={setPass2} />
+                                </div>
+                            </>}
+                            {get === 'group' && <>
+                                <div className={c.flex}>
+                                    <Input label='Group title' name={groupName} setName={setGroupName} />
+                                </div>
+                                <div className={c.flex}>
+                                    <Input label='Expected Number of Lessons Per Month' name={lessons} setName={setLessons} onInput={onlyNumb} />
                                 </div>
                             </>}
                         </div>
@@ -229,7 +270,7 @@ export const CreatePage = ({ email, get }) => {
                                     ))}
                                 </div>
                             </div>}
-                            {(get === 'student' || get === 'representetive') && <div className={c.inputCont}>
+                            {(get === 'student' || get === 'representetive' || get === 'group') && <div className={c.inputCont}>
                                 <label className={c.label}>Connect with a {get === 'student' ? 'representative' : 'student'}</label>
                                 <select className={c.input} value={representativeOption} onChange={(e) => setRepresentativeOption(e.target.value)}>
                                     <option>Connect</option>
@@ -242,6 +283,22 @@ export const CreatePage = ({ email, get }) => {
                                 <div className={c.groups}>
                                     {selectedRepresentatives.map((selectedRep) => (
                                         <div className={c.item} onClick={() => handleRepRemove(selectedRep)} key={selectedRep.groupId}>{selectedRep.firstname + ' ' + selectedRep.lastname}<b>&#215;</b></div>
+                                    ))}
+                                </div>
+                            </div>}
+                            {get === 'group' && <div className={c.inputCont}>
+                                <label className={c.label}>Connect with the teacher</label>
+                                <select className={c.input} value={userOption} onChange={(e) => setUserOption(e.target.value)}>
+                                    <option>Connect</option>
+                                    {users.map(((item) => {
+                                        return (
+                                            <option onClick={() => handleUserSelect(item)} key={item.id} value={item.title}>{item.firstname} {item.lastname}</option>
+                                        )
+                                    }))}
+                                </select>
+                                <div className={c.groups}>
+                                    {selectedUsers.map((selectedUser) => (
+                                        <div className={c.item} onClick={() => handleUserRemove(selectedUser)} key={selectedUser.groupId}>{selectedUser.firstname + ' ' + selectedUser.lastname}<b>&#215;</b></div>
                                     ))}
                                 </div>
                             </div>}
