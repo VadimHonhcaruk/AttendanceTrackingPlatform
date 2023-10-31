@@ -132,9 +132,7 @@ input[type="number"] {
 }
 
 .groups {
-  display: flex;
-  overflow-x: auto;
-  height: 5rem;
+  min-height: 5rem;
   width: 100%;
 }
 

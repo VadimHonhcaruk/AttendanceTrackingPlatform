@@ -12,6 +12,7 @@ import { getStudents } from '../../function/getStudents';
 import { isValid as isValidCard } from 'creditcard.js';
 import { cardInputChange } from '../../function/cardInput';
 import { getUsers } from '../../function/getUsers';
+import { getGroups } from '../../function/getGroups';
 var validator = require("email-validator");
 
 const now = new Date();
@@ -25,6 +26,7 @@ export const CreatePage = ({ email, get }) => {
     const [month, setMonth] = useState('');
     const [day, setDay] = useState('');
     const [lessons, setLessons] = useState('8');
+    const [lessonsPrice, setLessonsPrice] = useState('');
     const [groupName, setGroupName] = useState('');
     const [phone, setPhone] = useState('');
     const [error, setError] = useState(false);
@@ -98,7 +100,7 @@ export const CreatePage = ({ email, get }) => {
         async function fetchData() {
             setGroups([]);
             try {
-                const response = await getGroup(email, PATH, TOKEN, AUTH);
+                const response = await getGroups(PATH, TOKEN, AUTH);
                 const data = await response.json();
                 if (!data.message) {
                     await setGroups(data);
@@ -156,7 +158,7 @@ export const CreatePage = ({ email, get }) => {
     }, [AUTH, PATH, TOKEN, email, get]);
 
     const handleGroupSelect = (group) => {
-        const groupExists = selectedGroups.some((selectedGroup) => selectedGroup.groupId === group.groupId);
+        const groupExists = selectedGroups.some((selectedGroup) => selectedGroup.id === group.id);
 
         if (!groupExists) {
             setSelectedGroups(prev => [...prev, group]);
@@ -164,7 +166,7 @@ export const CreatePage = ({ email, get }) => {
     };
 
     const handleGroupRemove = (group) => {
-        const updatedGroups = selectedGroups.filter((selectedGroup) => selectedGroup.groupId !== group.groupId);
+        const updatedGroups = selectedGroups.filter((selectedGroup) => selectedGroup.id !== group.id);
         setSelectedGroups(updatedGroups);
     };
 
@@ -251,6 +253,9 @@ export const CreatePage = ({ email, get }) => {
                                 <div className={c.flex}>
                                     <Input label='Expected Number of Lessons Per Month' name={lessons} setName={setLessons} onInput={onlyNumb} />
                                 </div>
+                                <div className={c.flex}>
+                                    <Input label='Lesson Price, UAH/Lesson' name={lessonsPrice} setName={setLessonsPrice} onInput={onlyNumb} />
+                                </div>
                             </>}
                         </div>
                         <div className={c.select}>
@@ -259,25 +264,33 @@ export const CreatePage = ({ email, get }) => {
                                 <select className={c.input} value={groupTitle} onChange={(e) => setGroupTitle(e.target.value)}>
                                     <option>Add to Classes</option>
                                     {groups.map(((item) => {
-                                        return (
-                                            <option onClick={() => handleGroupSelect(item)} key={item.groupId} value={item.title}>{item.groupTitle}</option>
-                                        )
+                                        if (item.status === 'active') {
+                                            return (
+                                                <option onClick={() => handleGroupSelect(item)} key={item.id} value={item.title}>{item.title}</option>
+                                            )
+                                        } else {
+                                            return null;
+                                        }
                                     }))}
                                 </select>
                                 <div className={c.groups}>
                                     {selectedGroups.map((selectedGroup) => (
-                                        <div className={c.item} onClick={() => handleGroupRemove(selectedGroup)} key={selectedGroup.groupId}>{selectedGroup.groupTitle}<b>&#215;</b> </div>
+                                        <div className={c.item} onClick={() => handleGroupRemove(selectedGroup)} key={selectedGroup.id}>{selectedGroup.title}<b>&#215;</b> </div>
                                     ))}
                                 </div>
                             </div>}
-                            {(get === 'student' || get === 'representetive' || get === 'group') && <div className={c.inputCont}>
+                            {(get === 'student' || get === 'representative' || get === 'group') && <div className={c.inputCont}>
                                 <label className={c.label}>Connect with a {get === 'student' ? 'representative' : 'student'}</label>
                                 <select className={c.input} value={representativeOption} onChange={(e) => setRepresentativeOption(e.target.value)}>
                                     <option>Connect</option>
                                     {representative.map(((item) => {
-                                        return (
-                                            <option onClick={() => handleRepSelect(item)} key={item.id} value={item.title}>{item.firstname} {item.lastname}</option>
-                                        )
+                                        if (item.status === 'active') {
+                                            return (
+                                                <option onClick={() => handleRepSelect(item)} key={item.id} value={item.title}>{item.firstname} {item.lastname}</option>
+                                            )
+                                        } else {
+                                            return null;
+                                        }
                                     }))}
                                 </select>
                                 <div className={c.groups}>
@@ -291,9 +304,13 @@ export const CreatePage = ({ email, get }) => {
                                 <select className={c.input} value={userOption} onChange={(e) => setUserOption(e.target.value)}>
                                     <option>Connect</option>
                                     {users.map(((item) => {
-                                        return (
-                                            <option onClick={() => handleUserSelect(item)} key={item.id} value={item.title}>{item.firstname} {item.lastname}</option>
-                                        )
+                                        if (item.status === 'active') {
+                                            return (
+                                                <option onClick={() => handleUserSelect(item)} key={item.id} value={item.title}>{item.firstname} {item.lastname}</option>
+                                            )
+                                        } else {
+                                            return null;
+                                        }
                                     }))}
                                 </select>
                                 <div className={c.groups}>
