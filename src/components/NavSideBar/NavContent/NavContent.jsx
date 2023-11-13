@@ -4,7 +4,6 @@ import { NavOption } from './NavOption/NavOption';
 import board from '../../../images/board.svg';
 import check from '../../../images/check.svg';
 import classes from '../../../images/classes.svg';
-import grades from '../../../images/grades.svg';
 import parents from '../../../images/parents.svg';
 import students from '../../../images/students.svg';
 import users from '../../../images/users.svg';
@@ -16,7 +15,6 @@ export const NavContent = () => {
             <NavOption text='Take Attendance' src={check} link='attendance' />
             <NavOption text='Students' src={students} link='students' />
             <NavOption text='Classes' src={classes} link='classes' />
-            <NavOption text='Grades' src={grades} link='grades' />
             <NavOption text='Parents' src={parents} link='parents' />
             <NavOption text='Users' src={users} link='users' />
         </div>

@@ -17,7 +17,6 @@
   padding: 0.35rem 0.6rem;
   font-size: 0.875rem;
   border-radius: 0.25rem;
-  width: 5rem;
 }
 
 .name {
@@ -37,14 +36,9 @@
 .photoName {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
-  padding: 0 2rem 2rem;
-}
-
-.photoProf {
-  width: 3.4rem;
-  border-radius: 100%;
-  margin: 0.6rem;
+  padding: 1rem;
 }
 
 .fullName {
