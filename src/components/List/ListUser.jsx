@@ -42,45 +42,54 @@ export const ListUser = ({ get }) => {
         switch (sortType) {
             case 'first':
                 const sortedData = [...sortedInfo];
-                sortedData.sort((a, b) => a.firstname.localeCompare(b.firstname));
+                sortedData.sort((a, b) => a?.firstname?.localeCompare(b?.firstname));
                 setSortedInfo(sortedData);
                 break;
             case 'firstSWAP':
                 const sortedData11 = [...sortedInfo];
-                sortedData11.sort((b, a) => a.firstname.localeCompare(b.firstname));
+                sortedData11.sort((b, a) => a?.firstname?.localeCompare(b?.firstname));
                 setSortedInfo(sortedData11);
                 break;
             case 'last':
                 const sortedData2 = [...sortedInfo];
-                sortedData2.sort((a, b) => a.lastname.localeCompare(b.lastname));
+                sortedData2.sort((a, b) => a?.lastname?.localeCompare(b?.lastname));
                 setSortedInfo(sortedData2);
                 break;
             case 'lastSWAP':
                 const sortedData22 = [...sortedInfo];
-                sortedData22.sort((b, a) => a.lastname.localeCompare(b.lastname));
+                sortedData22.sort((b, a) => a?.lastname?.localeCompare(b?.lastname));
                 setSortedInfo(sortedData22);
                 break;
             case 'mobile':
                 const sortedData3 = [...sortedInfo];
-                sortedData3.sort((a, b) => a.phoneNumber.localeCompare(b.phoneNumber));
+                sortedData3.sort((a, b) => a?.phoneNumber?.localeCompare(b?.phoneNumber));
                 setSortedInfo(sortedData3);
                 break;
             case 'mobileSWAP':
                 const sortedData33 = [...sortedInfo];
-                sortedData33.sort((b, a) => a.phoneNumber.localeCompare(b.phoneNumber));
+                sortedData33.sort((b, a) => a?.phoneNumber?.localeCompare(b?.phoneNumber));
                 setSortedInfo(sortedData33);
                 break;
             case 'email':
                 const sortedData4 = [...sortedInfo];
-                sortedData4.sort((a, b) => a.email.localeCompare(b.email));
+                sortedData4.sort((a, b) => a?.email?.localeCompare(b?.email));
                 setSortedInfo(sortedData4);
                 break;
             case 'emailSWAP':
                 const sortedData44 = [...sortedInfo];
-                sortedData44.sort((b, a) => a.email.localeCompare(b.email));
+                sortedData44.sort((b, a) => a?.email?.localeCompare(b?.email));
                 setSortedInfo(sortedData44);
                 break;
-
+            case 'created':
+                const sortedData5 = [...sortedInfo];
+                sortedData5.sort((a, b) => a?.created?.localeCompare(b?.created));
+                setSortedInfo(sortedData5);
+                break;
+            case 'createdSWAP':
+                const sortedData55 = [...sortedInfo];
+                sortedData55.sort((b, a) => a?.created?.localeCompare(b?.created));
+                setSortedInfo(sortedData55);
+                break;
             default:
                 break;
         }
@@ -91,10 +100,11 @@ export const ListUser = ({ get }) => {
         setSortedInfo(info);
         setSortedInfo((prev) => prev.filter((obj) => {
             return (
-                obj.firstname.toLowerCase().includes(filter.toLowerCase()) ||
-                obj.lastname.toLowerCase().includes(filter.toLowerCase()) ||
-                obj.email.toLowerCase().includes(filter.toLowerCase()) ||
-                obj.phoneNumber.includes(filter)
+                obj?.firstname?.toLowerCase().includes(filter.toLowerCase()) ||
+                obj?.lastname?.toLowerCase().includes(filter.toLowerCase()) ||
+                obj?.email?.toLowerCase().includes(filter.toLowerCase()) ||
+                obj?.phoneNumber?.includes(filter) ||
+                obj?.created?.includes(filter)
             );
         }));
         if (sortType) {
@@ -121,10 +131,11 @@ export const ListUser = ({ get }) => {
                     </div>
                     <table className={c.table}>
                         <tr>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'first' ? 'firstSWAP' : 'first')}>FIRST</th>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'last' ? 'lastSWAP' : 'last')}>LAST</th>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'email' ? 'emailSWAP' : 'email')}>EMAIL</th>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'mobile' ? 'mobileSWAP' : 'mobile')}>MOBILE PHONE</th>
+                            <th onClick={() => setSortType(sortType === 'first' ? 'firstSWAP' : 'first')}>FIRST</th>
+                            <th onClick={() => setSortType(sortType === 'last' ? 'lastSWAP' : 'last')}>LAST</th>
+                            <th onClick={() => setSortType(sortType === 'email' ? 'emailSWAP' : 'email')}>EMAIL</th>
+                            <th onClick={() => setSortType(sortType === 'mobile' ? 'mobileSWAP' : 'mobile')}>MOBILE PHONE</th>
+                            <th onClick={() => setSortType(sortType === 'created' ? 'createdSWAP' : 'created')}>CREATED</th>
                         </tr>
                         {sortedInfo[0] && sortedInfo.map((obj) => {
                             if (obj.status === status || !status) {
@@ -133,6 +144,7 @@ export const ListUser = ({ get }) => {
                                     <td>{obj.lastname}</td>
                                     <td>{obj.email}</td>
                                     <td>{obj.phoneNumber}</td>
+                                    <td>{obj.created}</td>
                                 </tr>)
                             }
                             return null;

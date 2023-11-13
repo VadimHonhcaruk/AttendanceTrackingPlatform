@@ -1,14 +1,15 @@
 import React from 'react'
-import { AboutPage } from '../AboutPage/AboutPage';
 import c from './Profile.module.css';
-import { AttendancePage } from '../AttendancePage/AttendancePage';
+import { HeaderAdd } from '../Header/HeaderAdd';
 
 export const Profile = ({ firstName, secondName, photo, type, status, birth, email, phone, card, setFirstName, setSecondName, setBirth, setPhone, setEmailState, setCard, setActive }) => {
     return (
         <>
-            <div className={c.about}>
-                <AboutPage setFirstName={setFirstName} setSecondName={setSecondName} setBirth={setBirth} setPhone={setPhone} setEmailState={setEmailState} setCard={setCard} setActive={setActive} firstName={firstName} secondName={secondName} status={status} birth={birth} email={email} phone={phone} card={card} />
-                <AttendancePage />
+            <HeaderAdd title={`Vadim Honcharuk`} />
+            <div className={c.cont}>
+                <div className={c.main}>
+
+                </div>
             </div>
         </>
     )

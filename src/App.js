@@ -12,6 +12,7 @@ import { List } from "./components/List/List";
 import { ListUser } from "./components/List/ListUser";
 import { ListClasses } from "./components/List/ListClasses";
 import { CreatePage } from "./components/CreatePage/CreatePage";
+import { Profile } from "./components/Profile/Profile";
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
           <Route path="/create/user" element={<CreatePage get='user' email='user1@example.com' />} />
           <Route path="/create/group" element={<CreatePage get='group' email='user1@example.com' />} />
           <Route path="/create/representative" element={<CreatePage get='representative' email='user1@example.com' />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

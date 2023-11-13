@@ -62,6 +62,16 @@ export const ListClasses = ({ get }) => {
                 sortedData22.sort((b, a) => a.expectedNumberOfLessonsPerMonth - b.expectedNumberOfLessonsPerMonth);
                 setSortedInfo(sortedData22);
                 break;
+            case 'created':
+                const sortedData5 = [...sortedInfo];
+                sortedData5.sort((a, b) => a?.created?.localeCompare(b?.created));
+                setSortedInfo(sortedData5);
+                break;
+            case 'createdSWAP':
+                const sortedData55 = [...sortedInfo];
+                sortedData55.sort((b, a) => a?.created?.localeCompare(b?.created));
+                setSortedInfo(sortedData55);
+                break;
             default:
                 break;
         }
@@ -72,7 +82,8 @@ export const ListClasses = ({ get }) => {
         setSortedInfo((prev) => prev.filter((obj) => {
             return (
                 obj.title.toLowerCase().includes(filter.toLowerCase()) ||
-                obj.expectedNumberOfLessonsPerMonth.toString().includes(filter)
+                obj.expectedNumberOfLessonsPerMonth.toString().includes(filter) ||
+                obj?.created?.includes(filter)
             );
         }));
         if (sortType) {
@@ -98,17 +109,17 @@ export const ListClasses = ({ get }) => {
                         <input className={c.input} type="text" placeholder="Search..." value={filter} onChange={(e) => { setFilter(e.target.value) }} />
                     </div>
                     <table className={c.table}>
-                        <col className={c.th6} />
-                        <col className={c.th7} />
                         <tr>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'description' ? 'descriptionSWAP' : 'description')}>DESCRIPTION</th>
-                            <th className={c.curs} onClick={() => setSortType(sortType === 'lesson' ? 'lessonSWAP' : 'lesson')}>LESSON COUNT</th>
+                            <th onClick={() => setSortType(sortType === 'description' ? 'descriptionSWAP' : 'description')}>DESCRIPTION</th>
+                            <th onClick={() => setSortType(sortType === 'lesson' ? 'lessonSWAP' : 'lesson')}>LESSON COUNT</th>
+                            <th onClick={() => setSortType(sortType === 'created' ? 'createdSWAP' : 'created')}>CREATED</th>
                         </tr>
                         {sortedInfo[0] && sortedInfo.map((obj) => {
                             if (obj.status === status || !status) {
                                 return (<tr>
                                     <td>{obj.title}</td>
                                     <td>{obj.expectedNumberOfLessonsPerMonth}</td>
+                                    <td>{obj.created}</td>
                                 </tr>)
                             }
                             return null;
