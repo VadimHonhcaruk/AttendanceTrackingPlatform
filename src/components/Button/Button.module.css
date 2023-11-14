@@ -1,7 +1,20 @@
-.button {
-  background-color: rgb(60, 124, 161);
+.butt {
+  padding: 0.4rem 1rem;
+  border-radius: 0.3rem;
+  font-weight: 900;
   color: white;
-  padding: 0.25rem 1rem;
+  background-color: #4c78dd;
   cursor: pointer;
-  transition: all ease 0.5s;
+  transition: all 0.1s ease-in;
+}
+
+.butt:hover {
+  background-color: #3159b7;
+}
+
+.butt,
+.butt:active,
+.butt:hover {
+  text-decoration: none;
+  color: #ffffff;
 }

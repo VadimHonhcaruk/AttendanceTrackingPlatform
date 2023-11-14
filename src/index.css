@@ -4,6 +4,11 @@ html {
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/Inter-VariableFont_slnt\,wght.ttf");
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -12,17 +17,13 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   font-family: "Consolas";
+  font-family: "Inter";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(38, 38, 38);
   overflow-x: hidden;
   min-height: 100vh;
   background-color: var(--main-background-color);
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }
 
 [data-theme="dark"] {
@@ -44,6 +45,8 @@ code {
   --cell-choosenDay-color: #526888;
   --cell-hover-color: #364458;
   --tr-color: #1d2734;
+  --info-color: #2a384b;
+  --info-header-color: #1f2937;
 }
 
 [data-theme="light"] {
@@ -65,4 +68,6 @@ code {
   --cell-choosenDay-color: #d2def0;
   --cell-hover-color: #c7cdd6;
   --tr-color: #f2f2f2;
+  --info-color: #ffffff;
+  --info-header-color: #f6f7f9;
 }
