@@ -28,7 +28,6 @@
   display: flex;
   justify-content: space-between;
   margin-left: -5%;
-  margin-top: -1%;
   margin-bottom: 3rem;
 }
 
@@ -47,6 +46,14 @@
 
 .parentColor {
   background-color: #0c91cf;
+}
+
+.teamColor {
+  background-color: #d4428b;
+}
+
+.checkColor {
+  background-color: #ea580c;
 }
 
 .icon {
@@ -115,4 +122,48 @@
 
 .icontr {
   width: 100%;
+}
+
+.buttArch {
+  width: fit-content;
+  background-color: rgb(247, 179, 101);
+}
+
+.buttArch:hover {
+  background-color: rgb(213, 138, 51);
+}
+
+.buttInst {
+  background-color: #db3954;
+  width: fit-content;
+}
+
+.buttInst:hover {
+  background-color: #b91e38;
+}
+
+.flexButt {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.flexflex {
+  display: flex;
+}
+
+.marginbutt {
+  margin-left: 1rem;
+}
+
+.input {
+  width: 10rem;
+  padding: 0.2rem;
+  border: 1px solid grey;
+  border-radius: 5px;
+  outline: none;
+}
+
+.table tr .tdshka {
+  width: 30%;
 }

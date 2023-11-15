@@ -29,6 +29,7 @@ function App() {
   const [groupId, setGroupId] = useState(false);
   const [groupTitle, setGroupTitle] = useState('Please choose');
   const [update, setUpdate] = useState(true);
+  const [instantSuffix, setInstantSuffix] = useState('Individual classes');
 
   const updater = () => {
     setUpdate(false);
@@ -53,7 +54,7 @@ function App() {
           <Route path="/create/user" element={<CreatePage get='user' email='user1@example.com' />} />
           <Route path="/create/group" element={<CreatePage get='group' email='user1@example.com' />} />
           <Route path="/create/representative" element={<CreatePage get='representative' email='user1@example.com' />} />
-          <Route path="/profile/student" element={<Profile />} />
+          <Route path="/profile/student" element={<Profile instantSuffix={instantSuffix} />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>
