@@ -13,6 +13,8 @@ import { ListUser } from "./components/List/ListUser";
 import { ListClasses } from "./components/List/ListClasses";
 import { CreatePage } from "./components/CreatePage/CreatePage";
 import { Profile } from "./components/Profile/Profile";
+import { ProfileGroup } from "./components/Profile/ProfileGroup";
+import ModalPrice from "./components/Modal/Modal";
 
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
 
   const [hide, setHide] = useState(true);
   const [modalVision, setModalVision] = useState(false);
+  const [modalPrice, setModalPrice] = useState(false);
   const [choosenDay, setChoosenDay] = useState((moment()).format('YYYY-MM-DD'));
   const [groupId, setGroupId] = useState(false);
   const [groupTitle, setGroupTitle] = useState('Please choose');
@@ -41,6 +44,7 @@ function App() {
   return (
     <div>
       {modalVision && <Modal choosenDay={choosenDay} setModalVision={setModalVision} groupId={groupId} />}
+      {modalPrice && <ModalPrice setModalPrice={setModalPrice} />}
       <NavSideBar themeChange={handleLightThemeClick} />
       <div className={c.main}>
         <MainHeader theme={theme} setHide={setHide} hide={hide} />
@@ -54,7 +58,8 @@ function App() {
           <Route path="/create/user" element={<CreatePage get='user' email='user1@example.com' />} />
           <Route path="/create/group" element={<CreatePage get='group' email='user1@example.com' />} />
           <Route path="/create/representative" element={<CreatePage get='representative' email='user1@example.com' />} />
-          <Route path="/profile/student" element={<Profile instantSuffix={instantSuffix} />} />
+          <Route path="/profile/student/*" element={<Profile instantSuffix={instantSuffix} />} />
+          <Route path="/profile/group/*" element={<ProfileGroup setModalPrice={setModalPrice} />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </div>

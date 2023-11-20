@@ -1,0 +1,231 @@
+.modal {
+  z-index: 11000;
+  display: flex;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.699);
+  animation-duration: 300ms;
+}
+
+.modalWindow {
+  width: 25rem;
+  height: 14rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--add-main-color);
+  color: var(--text-color);
+  border: 1px solid #ffffff;
+  filter: drop-shadow(0 0 5px #c2c1c3);
+  padding: 1%;
+}
+
+.note {
+  width: 25rem;
+  height: 10rem;
+  display: flex;
+  resize: none;
+  padding: 1%;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: var(--add-main-color);
+  border: 1px solid rgb(149, 146, 146);
+  outline: none;
+  color: var(--text-color);
+}
+
+.noteTitle {
+  font-size: 1.2rem;
+  margin: 0;
+  margin-bottom: 1rem;
+  font-weight: 900;
+}
+
+.saveCont {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.save {
+  font-weight: 900;
+  padding: 0.25rem 0.7rem;
+  margin-top: 0.5rem;
+  background-color: #33bd2c;
+  border: 1px solid #ffffff;
+  box-sizing: border-box;
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 1400px) {
+  .modalWindow {
+    height: 70vh;
+    border-radius: 10%;
+  }
+
+  .buttonDel {
+    margin-left: 40%;
+  }
+}
+
+@media (max-width: 1280px) and (max-height: 900px) {
+  .modalWindow {
+    height: 80vh;
+    width: 40vw;
+  }
+
+  .timing {
+    font-size: 10px;
+  }
+
+  .addEventTitle {
+    font-size: 26px;
+  }
+
+  .addEventCreate {
+    margin: 4% 0;
+  }
+
+  .addEventClose {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 1164px) {
+  .buttonDel {
+    margin-left: 30%;
+  }
+
+  label {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .modalWindow {
+    height: 60vh;
+    border-radius: 0;
+  }
+
+  .timing {
+    font-size: 11px;
+  }
+
+  .addEventTitle {
+    font-size: 30px;
+  }
+
+  .addEventCreate {
+    margin: 5% 0;
+  }
+
+  .addEventClose {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 922px) {
+  .modalWindow {
+    height: 70vh;
+    width: 50vw;
+  }
+
+  .timing {
+    font-size: 9px;
+  }
+
+  .addEventTitle {
+    font-size: 25px;
+  }
+
+  .addEventClose {
+    font-size: 20px;
+  }
+
+  .input {
+    font-size: 15px;
+    width: 80%;
+  }
+
+  .button {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 630px) {
+  .modalWindow {
+    height: 70vh;
+    width: 80vw;
+  }
+
+  .timing {
+    font-size: 9px;
+  }
+
+  .addEventTitle {
+    font-size: 23px;
+  }
+
+  .addEventClose {
+    font-size: 20px;
+  }
+
+  .input {
+    font-size: 12px;
+    width: 80%;
+  }
+
+  .button {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .modalWindow {
+    height: 80vh;
+    width: 80vw;
+  }
+
+  .timing {
+    font-size: 7px;
+  }
+
+  label {
+    font-size: 10px;
+  }
+
+  .addEventTitle {
+    font-size: 18px;
+  }
+
+  .addEventClose {
+    font-size: 15px;
+  }
+
+  .input {
+    font-size: 10px;
+    width: 80%;
+    margin: 0;
+    height: 35px;
+  }
+
+  .button {
+    font-size: 9px;
+  }
+
+  .addEventCreate {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    color: rgb(158, 159, 159);
+    justify-content: space-around;
+  }
+
+  .inputDesc {
+    height: 15px;
+  }
+}
